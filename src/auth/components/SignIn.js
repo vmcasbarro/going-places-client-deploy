@@ -43,7 +43,7 @@ class SignIn extends Component {
         <label htmlFor="email">Email</label>
         <input
           required
-          type="email"
+          type="text"
           name="email"
           value={email}
           placeholder="Email"

@@ -49,7 +49,7 @@ class SignUp extends Component {
           required
           name="email"
           value={email}
-          type="email"
+          type="text"
           placeholder="Email"
           onChange={this.handleChange}
         />
