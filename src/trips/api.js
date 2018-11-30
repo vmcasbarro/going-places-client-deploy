@@ -22,3 +22,12 @@ export const createTrip = (name, user) => {
     })
   })
 }
+
+export const getTrips = (user) => {
+  return fetch(apiUrl + '/trips', {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}

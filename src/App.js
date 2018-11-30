@@ -19,14 +19,15 @@ class App extends Component {
     this.state = {
       user: null,
       flashMessage: '',
-      flashType: null,
-      trips: null
+      flashType: null
     }
   }
 
   setUser = user => this.setState({ user })
 
   clearUser = () => this.setState({ user: null })
+
+  setTrips = trips => this.setState({ trips })
 
   flash = (message, type) => {
     this.setState({ flashMessage: message, flashType: type })
@@ -38,7 +39,7 @@ class App extends Component {
   }
 
   render () {
-    const { flashMessage, flashType, user } = this.state
+    const { flashMessage, flashType, user, trips } = this.state
 
     return (
       <React.Fragment>
@@ -63,7 +64,7 @@ class App extends Component {
             // TRIP ROUTES
           }
           <AuthenticatedRoute user={user} path='/trips' render={() => (
-            <Trips flash={this.flash} user={user} />
+            <Trips flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
           )} />
         </main>
       </React.Fragment>
