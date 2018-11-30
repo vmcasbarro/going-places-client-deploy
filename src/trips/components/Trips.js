@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { handleErrors, changePassword } from '../api'
+import { handleErrors, createTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -10,33 +10,52 @@ class Trips extends Component {
     super()
 
     this.state = {
-
+      trip: {
+        name: ''
+      }
     }
   }
 
-  handleChange = event => this.setState({
-    [event.target.name]: event.target.value
-  })
+  handleChange = event => {
+    const newTrip = { ...this.state.trip, [event.target.name]: event.target.value }
+    this.setState({ trip: newTrip })
+  }
 
-  changePassword = event => {
+  onCreateTrip = event => {
     event.preventDefault()
 
-    const { oldPassword, newPassword } = this.state
+    const { name } = this.state.trip
     const { flash, history, user } = this.props
 
-    changePassword(this.state, user)
+    createTrip(name, user)
       .then(handleErrors)
-      .then(() => flash(messages.changePasswordSuccess, 'flash-success'))
-      .then(() => history.push('/'))
-      .catch(() => flash(messages.changePasswordFailure, 'flash-error'))
+      .then(() => flash(messages.createTripSuccess, 'flash-success'))
+      // .then(() => history.push('/trips'))
+      .catch(() => flash(messages.createTripFailure, 'flash-error'))
   }
 
   render () {
+    const { name } = this.state
+
     return(
       <React.Fragment>
 
         <h1>TRIPS</h1>
         <p>all your trips will show up here!</p>
+
+        <form className='create-trip-form' onSubmit={this.onCreateTrip}>
+
+          <label>new trip</label><br/>
+          <input
+            required
+            name="name"
+            value={name}
+            type="text"
+            placeholder="ex, Ecuador 2019"
+            onChange={this.handleChange}
+          />
+          <button type="submit">create your trip!</button>
+        </form>
 
       </React.Fragment>
     )
