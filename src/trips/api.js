@@ -31,3 +31,13 @@ export const getTrips = (user) => {
     }
   })
 }
+
+export const deleteTrip = (id, user) => {
+  return fetch(apiUrl + '/trips/' + id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}

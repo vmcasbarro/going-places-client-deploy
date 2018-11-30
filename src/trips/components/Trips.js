@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { handleErrors, createTrip, getTrips } from '../api'
+import { handleErrors, createTrip, getTrips, deleteTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -12,10 +12,13 @@ class Trips extends Component {
     this.state = {
       trips: []
     }
+
+    // This binding is necessary to make `this` work in the callback
+    this.onDeleteTrip = this.onDeleteTrip.bind(this)
+
   }
 
-  componentDidMount() {
-    console.log('mounted')
+  onGetTrips() {
     const { flash, history, user, setTrips } = this.props
     const { trips } = this.state
 
@@ -29,7 +32,19 @@ class Trips extends Component {
       // .then(() => this.createTripList(trips))
       // .then(() => console.log(tripList))
       .catch(() => flash(messages.getTripsFailure, 'flash-error'))
+  }
 
+  componentDidMount() {
+    this.onGetTrips()
+  }
+
+  onDeleteTrip(event) {
+    const { user } = this.props
+    const id = event.target.dataset['id']
+
+    deleteTrip(id, user)
+      .then(console.log)
+      .then(() => {this.onGetTrips()})
   }
 
   render () {
@@ -42,6 +57,12 @@ class Trips extends Component {
           <p>
             {trip.name}
           </p>
+          <button data-id={trip.id} onClick={this.onDeleteTrip}>
+            delete trip
+          </button>
+          <button data-id={trip.id} onClick={this.onDeleteTrip}>
+            delete trip
+          </button>
         </li>
       )
     })
