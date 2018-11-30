@@ -38,7 +38,6 @@ class SignUp extends Component {
   }
 
   render () {
-    console.log(apiUrl)
     const { email, password, passwordConfirmation} = this.state
 
     return (
