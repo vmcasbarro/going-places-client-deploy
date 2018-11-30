@@ -12,41 +12,10 @@ class Trips extends Component {
     this.state = {
       trip: {
         name: ''
-      },
-      tripList: null
+      }
     }
 
     let tripList
-  }
-
-  createTripList(trips) {
-    console.log('here!')
-    console.log(trips)
-    tripList = trips.map(trip=>{
-
-      return (
-        <li key={trip.id}>
-          <p>
-            {trip.name}
-          </p>
-        </li>
-      )
-    })
-  }
-
-  componentDidMount() {
-    const { flash, history, user, setTrips, trips } = this.props
-
-    getTrips(user)
-      .then(handleErrors)
-      .then(response => response.json())
-      .then((jsonResponse) => this.setState({trips: jsonResponse.trips}))
-      // .then(jsonResponse => setTrips(jsonResponse.trips))
-      // .then(() => {console.log(trips)})
-      // .then(() => this.createTripList(trips))
-      // .then(() => console.log(tripList))
-      .catch(() => flash(messages.getTripsFailure, 'flash-error'))
-
   }
 
   handleChange = event => {
@@ -63,37 +32,27 @@ class Trips extends Component {
     createTrip(name, user)
       .then(handleErrors)
       .then(() => flash(messages.createTripSuccess, 'flash-success'))
+      .then(() => {this.redirect()})
       // .then(() => history.push('/trips'))
       .catch(() => flash(messages.createTripFailure, 'flash-error'))
   }
 
+  redirect(){
+    this.props.history.push('/trips')
+  }
+
   render () {
-    const { name, trips } = this.state
-    console.log(trips)
-    //
-    // tripsList = trips.map(trip=>{
-    //   return (
-    //     <li key={trip.id}>
-    //       <p>
-    //         {trip.name}
-    //       </p>
-    //     </li>
-    //   )
-    // })
+    const { name } = this.state
 
     return(
       <React.Fragment>
 
-        <h1>TRIPS</h1>
-        <ul>
-          <li>all your trips will show up here!</li>
-          {/* {tripsList} */}
+        <h1>NEW TRIP</h1>
 
-        </ul>
 
         <form className='create-trip-form' onSubmit={this.onCreateTrip}>
 
-          <label>new trip</label><br/>
+          <br/>
           <input
             required
             name="name"

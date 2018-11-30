@@ -11,6 +11,7 @@ import ChangePassword from './auth/components/ChangePassword'
 
 // FEATURE IMPORTS
 import Trips from './trips/components/Trips'
+import NewTrip from './trips/components/NewTrip'
 
 class App extends Component {
   constructor () {
@@ -63,7 +64,10 @@ class App extends Component {
           {
             // TRIP ROUTES
           }
-          <AuthenticatedRoute user={user} path='/trips' render={() => (
+          <AuthenticatedRoute user={user} path='/trips/new-trip' render={() => (
+            <NewTrip flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/trips' render={() => (
             <Trips flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
           )} />
         </main>
