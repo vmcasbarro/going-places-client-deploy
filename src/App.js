@@ -27,7 +27,7 @@ class App extends Component {
       flashMessage: '',
       flashType: null,
       trips: [],
-      trip: {},
+      currentTrip: {},
       stops: []
     }
   }
@@ -38,7 +38,7 @@ class App extends Component {
 
   setTrips = trips => this.setState({ trips })
 
-  setTrip = trips => this.setState({ trip })
+  setCurrentTrip = trips => this.setState({ currentTrip })
 
   setStops = stops => this.setState({ stops })
 
