@@ -25,7 +25,10 @@ class App extends Component {
     this.state = {
       user: null,
       flashMessage: '',
-      flashType: null
+      flashType: null,
+      trips: [],
+      trip: {},
+      stops: []
     }
   }
 
@@ -34,6 +37,10 @@ class App extends Component {
   clearUser = () => this.setState({ user: null })
 
   setTrips = trips => this.setState({ trips })
+
+  setTrip = trips => this.setState({ trip })
+
+  setStops = stops => this.setState({ stops })
 
   flash = (message, type) => {
     this.setState({ flashMessage: message, flashType: type })

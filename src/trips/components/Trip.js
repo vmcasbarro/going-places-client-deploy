@@ -81,7 +81,7 @@ class Trip extends Component {
     return(
       <React.Fragment>
 
-        
+
 
         <h1>{trip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
@@ -94,6 +94,7 @@ class Trip extends Component {
 
         <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
 
+        <Map tripData={this.state}/>
 
 
       </React.Fragment>
