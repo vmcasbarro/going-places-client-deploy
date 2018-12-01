@@ -7,6 +7,9 @@ import messages from '../messages'
 import { messages as stopMessages } from '../../stops/messages'
 import apiUrl from '../../apiConfig'
 
+import AuthenticatedRoute from '../../auth/components/AuthenticatedRoute'
+import Map from '../../maps/components/Map'
+
 class Trip extends Component {
   constructor (props) {
     super(props)
@@ -58,6 +61,7 @@ class Trip extends Component {
   // }
 
   render () {
+    const { flash, user } = this.props
     const { trip, stops } = this.state
 
     const stopList = stops.map(stop=>{
@@ -77,6 +81,8 @@ class Trip extends Component {
     return(
       <React.Fragment>
 
+        
+
         <h1>{trip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
         <br/>
@@ -87,6 +93,7 @@ class Trip extends Component {
         { stopList }
 
         <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
+
 
 
       </React.Fragment>
