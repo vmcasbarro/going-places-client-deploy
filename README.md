@@ -2,6 +2,12 @@
 
 This will be my capstone's client-side README
 
+Step Log
+1. Deploy template
+  1. follow instructions per [https://github.com/gitname/react-gh-pages]
+  2. change api url in arc/auth/api.js to be dynamic based on deployment/development environments
+2. duplicate src/auth directory to create trips directory
+
 ## [License](LICENSE)
 
 1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
