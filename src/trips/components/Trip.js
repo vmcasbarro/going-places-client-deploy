@@ -47,7 +47,7 @@ class Trips extends Component {
   // }
 
   render () {
-    console.log(this.id)
+    const { trip } = this.state
 
     // const { trips } = this.state
     //
@@ -71,7 +71,8 @@ class Trips extends Component {
     return(
       <React.Fragment>
 
-        <h1>A TRIP</h1>
+        <h1>{trip.name}</h1>
+        <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
 
 
       </React.Fragment>

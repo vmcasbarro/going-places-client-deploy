@@ -13,6 +13,7 @@ import ChangePassword from './auth/components/ChangePassword'
 import Trips from './trips/components/Trips'
 import NewTrip from './trips/components/NewTrip'
 import Trip from './trips/components/Trip'
+import RenameTrip from './trips/components/RenameTrip'
 
 class App extends Component {
   constructor () {
@@ -73,6 +74,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} exact path='/trips/:id' render={() => (
             <Trip flash={this.flash} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/trips/:id/rename' render={() => (
+            <RenameTrip flash={this.flash} user={user} />
           )} />
 
         </main>

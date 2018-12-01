@@ -51,3 +51,18 @@ export const getTrip = (id, user) => {
     }
   })
 }
+
+export const renameTrip = (id, newName, user) => {
+  return fetch(apiUrl + '/trips/' + id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    },
+    body: JSON.stringify({
+      trip: {
+        name: newName
+      }
+    })
+  })
+}
