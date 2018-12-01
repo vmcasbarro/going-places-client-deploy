@@ -73,6 +73,8 @@ class Trip extends Component {
 
         <h1>{trip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
+        <br/>
+        <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
 
 
       </React.Fragment>

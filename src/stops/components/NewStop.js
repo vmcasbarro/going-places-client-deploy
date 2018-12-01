@@ -5,63 +5,72 @@ import { handleErrors, createTrip, getTrips } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
-class Trips extends Component {
+class NewStop extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      trip: {
-        name: ''
+      stop: {
+        location: '',
+        date: ''
       }
     }
 
-    let tripList
+    // get trip id which is used by most of the methods in this class
+    this.id = this.props.match.params.id
   }
 
   handleChange = event => {
-    const newTrip = { ...this.state.trip, [event.target.name]: event.target.value }
-    this.setState({ trip: newTrip })
+    const newStop = { ...this.state.stop, [event.target.name]: event.target.value }
+    this.setState({ stop: newStop })
   }
 
-  onCreateTrip = event => {
+  onCreateStop = event => {
     event.preventDefault()
 
-    const { name } = this.state.trip
+    const { stop } = this.state
     const { flash, history, user } = this.props
 
-    createTrip(name, user)
+    createStop(stop, this.id, user)
       .then(handleErrors)
-      .then(() => flash(messages.createTripSuccess, 'flash-success'))
+      .then(() => flash(messages.createStopSuccess, 'flash-success'))
       .then(() => {this.redirect()})
-      // .then(() => history.push('/trips'))
-      .catch(() => flash(messages.createTripFailure, 'flash-error'))
+      .catch(() => flash(messages.createStopFailure, 'flash-error'))
   }
 
   redirect(){
-    this.props.history.push('/trips')
+    this.props.history.push(`/trips/${this.id}`)
   }
 
   render () {
-    const { name } = this.state
+    const { location, date } = this.state
 
     return(
       <React.Fragment>
 
-        <h1>NEW TRIP</h1>
+        <h1>NEW STOP</h1>
 
 
-        <form className='create-trip-form' onSubmit={this.onCreateTrip}>
+        <form className='create-stop-form' onSubmit={this.onCreateStop}>
 
           <br/>
           <input
             required
-            name="name"
-            value={name}
+            name="location"
+            value={location}
             type="text"
-            placeholder="ex, Ecuador 2019"
+            placeholder="ex, 'London, UK'"
             onChange={this.handleChange}
           />
-          <button type="submit">create your trip!</button>
+          <input
+            required
+            name="date"
+            value={date}
+            type="date"
+            placeholder="ex, 2018-01-01"
+            onChange={this.handleChange}
+          />
+          <button type="submit">add stop</button>
         </form>
 
       </React.Fragment>
@@ -69,4 +78,4 @@ class Trips extends Component {
   }
 }
 
-export default withRouter(Trips)
+export default withRouter(NewStop)

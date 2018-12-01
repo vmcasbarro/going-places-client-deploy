@@ -14,6 +14,8 @@ import Trips from './trips/components/Trips'
 import NewTrip from './trips/components/NewTrip'
 import Trip from './trips/components/Trip'
 import RenameTrip from './trips/components/RenameTrip'
+import NewStop from './stops/components/NewStop'
+
 
 class App extends Component {
   constructor () {
@@ -80,6 +82,16 @@ class App extends Component {
               <RenameTrip flash={this.flash} user={user} />
             )} />
           </Switch>
+
+          {
+            // STOP ROUTES
+          }
+
+          <AuthenticatedRoute user={user} exact path='/trips/:id/add-stop' render={() => (
+            <NewStop flash={this.flash} user={user} />
+          )} />
+
+
 
         </main>
       </React.Fragment>
