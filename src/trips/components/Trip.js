@@ -29,24 +29,24 @@ class Trip extends Component {
   }
 
   onGetTrip() {
-    const { flash, history, user } = this.props
-    const { trip } = this.state
+    const { flash, user, currentTrip, setCurrentTrip } = this.props
 
     getTrip(this.id, user)
       .then(handleErrors)
       .then(response => response.json())
-      .then((jsonResponse) => this.setState({trip: jsonResponse.trip}))
+      .then(console.log)
+      .then((jsonResponse) => setCurrentTrip({currentTrip: jsonResponse.trip}))
       .catch(() => flash(messages.getTripsFailure, 'flash-error'))
   }
 
   async componentDidMount() {
-    const { flash, history, user } = this.props
+    const { flash, history, user, setStops } = this.props
 
     await this.onGetTrip()
     getStops(this.id, user)
       .then(handleErrors)
       .then(response => response.json())
-      .then((jsonResponse) => this.setState({stops: jsonResponse.stops}))
+      .then((jsonResponse) => setStops({stops: jsonResponse.stops}))
       .catch(() => flash(messages.getStopsFailure, 'flash-error'))
 
 
@@ -61,36 +61,44 @@ class Trip extends Component {
   // }
 
   render () {
-    const { flash, user } = this.props
-    const { trip, stops } = this.state
+    const { flash, user, currentTrip, stops } = this.props
+    console.log(stops)
+    console.log(currentTrip)
+    let stopList
+    if (stops.length) {
 
-    const stopList = stops.map(stop=>{
-      const { location, date, id } = stop
+      stopList = stops.stops.map(stop=>{
+        const { location, date, id } = stop
 
-      return (
-        <li key={id}>
+        return (
+          <li key={id}>
 
-          <Link to={`/trips/${this.id}/stops/${id}`}>{location}</Link>
-          <br/>
-          <p>{date}</p>
+            <Link to={`/trips/${this.id}/stops/${id}`}>{location}</Link>
+            <br/>
+            <p>{date}</p>
 
-        </li>
-      )
-    })
+          </li>
+        )
+      })
+
+    }
 
     return(
       <React.Fragment>
 
 
 
-        <h1>{trip.name}</h1>
+        <h1>{currentTrip && currentTrip.trip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
         <br/>
         <Link exact to={ `/trips/${this.id}/map` }>map trip!</Link>
         <br/>
 
+        <ul>
 
-        { stopList }
+          { stopList }
+
+        </ul>
 
         <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
 
