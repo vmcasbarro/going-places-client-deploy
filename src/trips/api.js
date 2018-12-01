@@ -41,3 +41,13 @@ export const deleteTrip = (id, user) => {
     }
   })
 }
+
+export const getTrip = (id, user) => {
+  return fetch(apiUrl + '/trips/' + id, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}

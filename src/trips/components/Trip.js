@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 
-import { handleErrors, createTrip, getTrips, deleteTrip } from '../api'
+import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -10,38 +10,44 @@ class Trips extends Component {
     super(props)
 
     this.state = {
+      trip: {},
       stops: []
     }
 
     // This binding is necessary to make `this` work in the callback
-    this.onDeleteTrip = this.onDeleteTrip.bind(this)
+    // this.onDeleteTrip = this.onDeleteTrip.bind(this)
+    this.onGetTrip = this.onGetTrip.bind(this)
+
+    // get trip id which is used by most of the methods in this class
+    this.id = this.props.match.params.id
 
   }
 
-  onGetTrips() {
-    const { flash, history, user, setTrips } = this.props
-    const { trips } = this.state
+  onGetTrip() {
+    const { flash, history, user } = this.props
+    const { trip } = this.state
 
-    getTrips(user)
+    getTrip(this.id, user)
       .then(handleErrors)
       .then(response => response.json())
-      .then((jsonResponse) => this.setState({trips: jsonResponse.trips}))
+      .then((jsonResponse) => this.setState({trip: jsonResponse.trip}))
       .catch(() => flash(messages.getTripsFailure, 'flash-error'))
   }
 
-  // componentDidMount() {
-  //   this.onGetTrips()
-  // }
-
-  onDeleteTrip(event) {
-    const { user } = this.props
-    const id = event.target.dataset['id']
-
-    deleteTrip(id, user)
-      .then(() => {this.onGetTrips()})
+  componentDidMount() {
+    this.onGetTrip()
   }
 
+  // onDeleteTrip(event) {
+  //   const { user } = this.props
+  //   const id = event.target.dataset['id']
+  //
+  //   deleteTrip(id, user)
+  //     .then(() => {this.onGetTrips()})
+  // }
+
   render () {
+    console.log(this.id)
 
     // const { trips } = this.state
     //
