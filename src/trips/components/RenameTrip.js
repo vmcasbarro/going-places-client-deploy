@@ -5,7 +5,7 @@ import { handleErrors, createTrip, getTrips, getTrip, renameTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
-class Trips extends Component {
+class RenameTrip extends Component {
   constructor (props) {
     super(props)
 
@@ -99,4 +99,4 @@ class Trips extends Component {
   }
 }
 
-export default withRouter(Trips)
+export default withRouter(RenameTrip)

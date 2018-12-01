@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.scss'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import Header from './header/Header'
@@ -66,18 +66,20 @@ class App extends Component {
           {
             // TRIP ROUTES
           }
-          <AuthenticatedRoute user={user} path='/trips/new-trip' render={() => (
-            <NewTrip flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
-          )} />
-          <AuthenticatedRoute user={user} exact path='/trips' render={() => (
-            <Trips flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
-          )} />
-          <AuthenticatedRoute user={user} exact path='/trips/:id' render={() => (
-            <Trip flash={this.flash} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} exact path='/trips/:id/rename' render={() => (
-            <RenameTrip flash={this.flash} user={user} />
-          )} />
+          <Switch>
+            <AuthenticatedRoute user={user} exact path='/trips/new-trip' render={() => (
+              <NewTrip flash={this.flash} user={user} />
+            )} />
+            <AuthenticatedRoute user={user} exact path='/trips' render={() => (
+              <Trips flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
+            )} />
+            <AuthenticatedRoute user={user} exact path='/trips/:id' render={() => (
+              <Trip flash={this.flash} user={user} />
+            )} />
+            <AuthenticatedRoute user={user} exact path='/trips/:id/rename' render={() => (
+              <RenameTrip flash={this.flash} user={user} />
+            )} />
+          </Switch>
 
         </main>
       </React.Fragment>
