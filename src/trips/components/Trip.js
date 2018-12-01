@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
 import { getStops } from '../../stops/api'
 import messages from '../messages'
+import { messages as stopMessages } from '../../stops/messages'
 import apiUrl from '../../apiConfig'
 
 class Trip extends Component {
@@ -42,7 +43,9 @@ class Trip extends Component {
     getStops(this.id, user)
       .then(handleErrors)
       .then(response => response.json())
-      .then(console.log)
+      .then((jsonResponse) => this.setState({stops: jsonResponse.stops}))
+      .catch(() => flash(messages.getStopsFailure, 'flash-error'))
+
 
   }
 
@@ -55,26 +58,21 @@ class Trip extends Component {
   // }
 
   render () {
-    const { trip } = this.state
+    const { trip, stops } = this.state
 
-    // const { trips } = this.state
-    //
-    // const tripList = trips.map(trip=>{
-    //   const { name, id } = trip
-    //
-    //   return (
-    //     <li key={id}>
-    //
-    //       <Link to={`/trips/${id}`}>{name}</Link>
-    //       <button data-id={id} onClick={this.onDeleteTrip}>
-    //         delete trip
-    //       </button>
-    //       <button data-id={id} onClick={this.onDeleteTrip}>
-    //         delete trip
-    //       </button>
-    //     </li>
-    //   )
-    // })
+    const stopList = stops.map(stop=>{
+      const { location, date, id } = stop
+
+      return (
+        <li key={id}>
+
+          <Link to={`/trips/${this.id}/stops/${id}`}>{location}</Link>
+          <br/>
+          <p>{date}</p>
+
+        </li>
+      )
+    })
 
     return(
       <React.Fragment>
@@ -82,6 +80,9 @@ class Trip extends Component {
         <h1>{trip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
         <br/>
+
+        { stopList }
+
         <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
 
 
