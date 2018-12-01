@@ -10,7 +10,7 @@ class Trips extends Component {
     super(props)
 
     this.state = {
-      trips: []
+      stops: []
     }
 
     // This binding is necessary to make `this` work in the callback
@@ -29,9 +29,9 @@ class Trips extends Component {
       .catch(() => flash(messages.getTripsFailure, 'flash-error'))
   }
 
-  componentDidMount() {
-    this.onGetTrips()
-  }
+  // componentDidMount() {
+  //   this.onGetTrips()
+  // }
 
   onDeleteTrip(event) {
     const { user } = this.props
@@ -43,32 +43,30 @@ class Trips extends Component {
 
   render () {
 
-    const { trips } = this.state
-
-    const tripList = trips.map(trip=>{
-      const { name, id } = trip
-
-      return (
-        <li key={id}>
-          
-          <Link to={`/trips/${id}`}>{name}</Link>
-          <button data-id={id} onClick={this.onDeleteTrip}>
-            delete trip
-          </button>
-          <button data-id={id} onClick={this.onDeleteTrip}>
-            delete trip
-          </button>
-        </li>
-      )
-    })
+    // const { trips } = this.state
+    //
+    // const tripList = trips.map(trip=>{
+    //   const { name, id } = trip
+    //
+    //   return (
+    //     <li key={id}>
+    //
+    //       <Link to={`/trips/${id}`}>{name}</Link>
+    //       <button data-id={id} onClick={this.onDeleteTrip}>
+    //         delete trip
+    //       </button>
+    //       <button data-id={id} onClick={this.onDeleteTrip}>
+    //         delete trip
+    //       </button>
+    //     </li>
+    //   )
+    // })
 
     return(
       <React.Fragment>
 
-        <h1>TRIPS</h1>
-        <ul>
-          {tripList}
-        </ul>
+        <h1>A TRIP</h1>
+
 
       </React.Fragment>
     )
