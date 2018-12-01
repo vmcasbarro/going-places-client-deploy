@@ -5,7 +5,7 @@ import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
-class Trips extends Component {
+class Trip extends Component {
   constructor (props) {
     super(props)
 
@@ -80,4 +80,4 @@ class Trips extends Component {
   }
 }
 
-export default withRouter(Trips)
+export default withRouter(Trip)

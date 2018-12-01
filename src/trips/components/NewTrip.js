@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { handleErrors, createTrip, getTrips } from '../api'
+import { handleErrors, createTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
-class Trips extends Component {
+class NewTrip extends Component {
   constructor (props) {
     super(props)
 
@@ -15,7 +15,6 @@ class Trips extends Component {
       }
     }
 
-    let tripList
   }
 
   handleChange = event => {
@@ -69,4 +68,4 @@ class Trips extends Component {
   }
 }
 
-export default withRouter(Trips)
+export default withRouter(NewTrip)

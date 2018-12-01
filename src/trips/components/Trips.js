@@ -50,11 +50,8 @@ class Trips extends Component {
 
       return (
         <li key={id}>
-          
+
           <Link to={`/trips/${id}`}>{name}</Link>
-          <button data-id={id} onClick={this.onDeleteTrip}>
-            delete trip
-          </button>
           <button data-id={id} onClick={this.onDeleteTrip}>
             delete trip
           </button>
