@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { handleErrors, createTrip, getTrips } from '../api'
+import { handleErrors, createStop } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 

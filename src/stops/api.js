@@ -8,16 +8,17 @@ export const handleErrors = res => {
   }
 }
 
-export const createTrip = (name, user) => {
-  return fetch(apiUrl + '/trips', {
+export const createStop = (stop, tripId, user) => {
+  return fetch(apiUrl + '/trips/' + tripId + '/stops', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization':`Token token=${user.token}`
     },
     body: JSON.stringify({
-      trip: {
-        name: name
+      stop: {
+        location: stop.location,
+        date: stop.date
       }
     })
   })
