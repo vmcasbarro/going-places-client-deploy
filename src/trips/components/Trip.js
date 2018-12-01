@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 
 import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
+import { getStops } from '../../stops/api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -34,8 +35,15 @@ class Trip extends Component {
       .catch(() => flash(messages.getTripsFailure, 'flash-error'))
   }
 
-  componentDidMount() {
-    this.onGetTrip()
+  async componentDidMount() {
+    const { flash, history, user } = this.props
+
+    await this.onGetTrip()
+    getStops(this.id, user)
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(console.log)
+
   }
 
   // onDeleteTrip(event) {

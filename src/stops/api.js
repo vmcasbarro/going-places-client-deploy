@@ -24,8 +24,8 @@ export const createStop = (stop, tripId, user) => {
   })
 }
 
-export const getTrips = (user) => {
-  return fetch(apiUrl + '/trips', {
+export const getStops = (tripId, user) => {
+  return fetch(apiUrl + '/trips/' + tripId + '/stops', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization':`Token token=${user.token}`
