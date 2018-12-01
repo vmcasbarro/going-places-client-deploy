@@ -67,7 +67,7 @@ class Trip extends Component {
     let stopList
     if (stops.length) {
 
-      stopList = stops.stops.map(stop=>{
+      stopList = stops.map(stop=>{
         const { location, date, id } = stop
 
         return (
@@ -88,7 +88,7 @@ class Trip extends Component {
 
 
 
-        <h1>{currentTrip && currentTrip.trip.name}</h1>
+        <h1>{currentTrip && currentTrip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
         <br/>
         <Link exact to={ `/trips/${this.id}/map` }>map trip!</Link>
