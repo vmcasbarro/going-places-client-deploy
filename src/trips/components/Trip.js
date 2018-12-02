@@ -14,10 +14,7 @@ class Trip extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      trip: {},
-      stops: []
-    }
+    this.state = {}
 
     // This binding is necessary to make `this` work in the callback
     // this.onDeleteTrip = this.onDeleteTrip.bind(this)
@@ -97,7 +94,7 @@ class Trip extends Component {
         </ul>
 
         <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
-        
+
 
 
       </React.Fragment>
