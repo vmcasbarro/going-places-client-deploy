@@ -14,37 +14,17 @@ class MyMap extends Component {
     this.state = {
     }
 
-  }
-
-  aFuntion () {
 
   }
 
-  geocode () {
+  componentDidMount() {
+    const { stops } = this.props
+    const firstStop = stops[0]
+    let map
     loadGoogleMapsApi({key: 'AIzaSyAAE6Tu5R06UneZxj4JPUuPtbSiwegGCWk'})
-      .then(function (googleMaps) {
-        // ...
-        const geocoder = new googleMaps.Geocoder()
+      .then((googleMaps) => {
 
-        const address = 'Singapore'
-        geocoder.geocode( { 'address': address}, function(results, status) {
-          if (status == 'OK') {
-            console.log(results)
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status)
-          }
-        })
-      })
-  }
-
-
-
-  async componentDidMount() {
-    this.geocode()
-    loadGoogleMapsApi({key: 'AIzaSyAAE6Tu5R06UneZxj4JPUuPtbSiwegGCWk'})
-      .then(function (googleMaps) {
-
-        new googleMaps.Map(document.querySelector('.map'), {
+        map = new googleMaps.Map(document.querySelector('.map'), {
           center: {
             lat: 13.434811,
             lng: 103.889144
@@ -161,7 +141,17 @@ class MyMap extends Component {
             }
           ]
         })
+        const geocoder = new googleMaps.Geocoder()
+        const address = firstStop.location
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == 'OK') {
+            map.setCenter(results[0].geometry.location)
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status)
+          }
+        })
       })
+
       .catch(function (error) {
         console.error(error)
       })
