@@ -8,7 +8,7 @@ import { messages as stopMessages } from '../../stops/messages'
 import apiUrl from '../../apiConfig'
 
 import AuthenticatedRoute from '../../auth/components/AuthenticatedRoute'
-import Map from '../../maps/components/Map'
+import MyMap from '../../maps/components/MyMap'
 
 class Trip extends Component {
   constructor (props) {

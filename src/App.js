@@ -15,8 +15,7 @@ import NewTrip from './trips/components/NewTrip'
 import Trip from './trips/components/Trip'
 import RenameTrip from './trips/components/RenameTrip'
 import NewStop from './stops/components/NewStop'
-import Map from './maps/components/Map'
-
+import MyMap from './maps/components/MyMap'
 
 class App extends Component {
   constructor () {
@@ -60,6 +59,7 @@ class App extends Component {
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
         <main className="container">
+
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
           )} />
@@ -98,7 +98,7 @@ class App extends Component {
             )} />
 
             <AuthenticatedRoute user={user} exact path='/trips/:id/map' render={() => (
-              <Map 
+              <MyMap
                 flash={this.flash}
                 user={user}
                 trip={trip}
