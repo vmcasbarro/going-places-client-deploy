@@ -27,8 +27,7 @@ class App extends Component {
       flashMessage: '',
       flashType: null,
       trips: [],
-      currentTrip: {
-      },
+      trip: {},
       stops: []
     }
   }
@@ -39,7 +38,7 @@ class App extends Component {
 
   setTrips = trips => this.setState({ trips })
 
-  setCurrentTrip = trip => this.setState({ currentTrip })
+  setTrip = trip => this.setState({ trip })
 
   setStops = stops => this.setState({ stops })
 
@@ -53,7 +52,7 @@ class App extends Component {
   }
 
   render () {
-    const { flashMessage, flashType, user, trips, currentTrip, stops } = this.state
+    const { flashMessage, flashType, user, trips, trip, stops } = this.state
 
     return (
       <React.Fragment>
@@ -88,9 +87,9 @@ class App extends Component {
               <Trip
                 flash={this.flash}
                 user={user}
-                setCurrentTrip={this.setCurrentTrip}
+                setTrip={this.setTrip}
                 setStops={this.setStops}
-                currentTrip={currentTrip}
+                trip={trip}
                 stops={stops}
               />
             )} />
@@ -99,7 +98,12 @@ class App extends Component {
             )} />
 
             <AuthenticatedRoute user={user} exact path='/trips/:id/map' render={() => (
-              <Map flash={this.flash} user={user} />
+              <Map 
+                flash={this.flash}
+                user={user}
+                trip={trip}
+                stops={stops}
+              />
             )} />
 
           </Switch>

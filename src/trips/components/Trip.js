@@ -29,13 +29,12 @@ class Trip extends Component {
   }
 
   onGetTrip() {
-    const { flash, user, currentTrip, setCurrentTrip } = this.props
+    const { flash, user, setTrip } = this.props
 
     getTrip(this.id, user)
       .then(handleErrors)
       .then(response => response.json())
-      .then(console.log)
-      .then((jsonResponse) => setCurrentTrip({currentTrip: jsonResponse.trip}))
+      .then((jsonResponse) => setTrip(jsonResponse.trip))
       .catch(() => flash(messages.getTripsFailure, 'flash-error'))
   }
 
@@ -46,10 +45,8 @@ class Trip extends Component {
     getStops(this.id, user)
       .then(handleErrors)
       .then(response => response.json())
-      .then((jsonResponse) => setStops({stops: jsonResponse.stops}))
+      .then((jsonResponse) => setStops(jsonResponse.stops))
       .catch(() => flash(messages.getStopsFailure, 'flash-error'))
-
-
   }
 
   // onDeleteTrip(event) {
@@ -61,9 +58,8 @@ class Trip extends Component {
   // }
 
   render () {
-    const { flash, user, currentTrip, stops } = this.props
-    console.log(stops)
-    console.log(currentTrip)
+    const { flash, user, trip, stops } = this.props
+    console.log(trip)
     let stopList
     if (stops.length) {
 
@@ -88,7 +84,7 @@ class Trip extends Component {
 
 
 
-        <h1>{currentTrip && currentTrip.name}</h1>
+        <h1>{trip && trip.name}</h1>
         <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
         <br/>
         <Link exact to={ `/trips/${this.id}/map` }>map trip!</Link>
