@@ -16,14 +16,38 @@ class MyMap extends Component {
 
   }
 
+  aFuntion () {
+
+  }
+
+  geocode () {
+    loadGoogleMapsApi({key: 'AIzaSyAAE6Tu5R06UneZxj4JPUuPtbSiwegGCWk'})
+      .then(function (googleMaps) {
+        // ...
+        const geocoder = new googleMaps.Geocoder()
+
+        const address = 'Singapore'
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == 'OK') {
+            console.log(results)
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status)
+          }
+        })
+      })
+  }
+
+
+
   async componentDidMount() {
+    this.geocode()
     loadGoogleMapsApi({key: 'AIzaSyAAE6Tu5R06UneZxj4JPUuPtbSiwegGCWk'})
       .then(function (googleMaps) {
 
         new googleMaps.Map(document.querySelector('.map'), {
           center: {
-            lat: 42.356994,
-            lng: -71.083698
+            lat: 13.434811,
+            lng: 103.889144
           },
           zoom: 13,
           styles: [
