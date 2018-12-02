@@ -97,8 +97,7 @@ class Trip extends Component {
         </ul>
 
         <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
-
-        <Map tripData={this.state}/>
+        
 
 
       </React.Fragment>
