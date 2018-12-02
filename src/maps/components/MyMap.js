@@ -18,8 +18,15 @@ class MyMap extends Component {
   }
 
   componentDidMount() {
+    // es6 destructuring of this.props
     const { stops } = this.props
+
+    const arrayOfLocations = stops.map(stop => stop.location)
+    // console.log(arrayOfLocations)
+
+    // break out first stop as a variable to reference
     const firstStop = stops[0]
+    // initialize map variable which will be the instance of google map
     let map
     loadGoogleMapsApi({key: 'AIzaSyAAE6Tu5R06UneZxj4JPUuPtbSiwegGCWk'})
       .then((googleMaps) => {
@@ -141,14 +148,35 @@ class MyMap extends Component {
             }
           ]
         })
+
         const geocoder = new googleMaps.Geocoder()
         const address = firstStop.location
+
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == 'OK') {
             map.setCenter(results[0].geometry.location)
+            const marker = new google.maps.Marker({
+              position: results[0].geometry.location,
+              map: map,
+              title: 'Hello World!'
+            })
           } else {
             alert('Geocode was not successful for the following reason: ' + status)
           }
+        })
+
+        arrayOfLocations.forEach(location => {
+          geocoder.geocode( { 'address': location}, function(results, status) {
+            if (status == 'OK') {
+              const marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map,
+                title: 'Hello World!'
+              })
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status)
+            }
+          })
         })
       })
 
