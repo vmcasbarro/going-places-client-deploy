@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 
-import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
+import { handleErrors, getForecast } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
-import { googleMapsApiKey } from '../../.env.js'
+import { googleMapsApiKey, darkSkyApiKey } from '../../.env.js'
 const googleTranslate = require('google-translate')(googleMapsApiKey)
+const DarkSky = require('dark-sky')
+const darksky = new DarkSky(darkSkyApiKey)
 
 class Stop extends Component {
   constructor (props) {
@@ -32,13 +34,28 @@ class Stop extends Component {
     this.id = this.props.match.params.id
   }
 
+  onGetForecast(lat, long) {
+    const { flash } = this.props
+    console.log(lat, long)
+    console.log(getForecast)
+    getForecast(lat, long)
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(console.log)
+      .catch(() => flash(messages.apiFailure, 'flash-error'))
+  }
+
   componentDidMount() {
+    // handle stop info
     const { stops } = this.props
     const stop = stops.find(stop => stop.id == this.id)
     const number = stops.indexOf(stop) + 1
     console.log(number)
     this.setState({ stop: stop })
     this.setState({ stopNumber: number })
+
+    // handle weather retrieval
+    this.onGetForecast('42.369401', '-71.101173')
 
   }
 

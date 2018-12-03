@@ -1,4 +1,6 @@
 import apiUrl from '../apiConfig'
+import { darkSkyApiKey } from '../.env.js'
+
 
 export const handleErrors = res => {
   if (res.ok) {
@@ -64,6 +66,31 @@ export const renameTrip = (id, newName, user) => {
       trip: {
         name: newName
       }
+    })
+  })
+}
+
+// export const getForecast = (lat, long) => {
+//   return fetch('http://localhost:4741/forecast', {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       lat: lat,
+//       long: long
+//     })
+//   })
+// }
+
+export const getForecast = (lat, long) => {
+  return fetch(apiUrl + '/forecast', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      lat: lat,
+      long: long
     })
   })
 }
