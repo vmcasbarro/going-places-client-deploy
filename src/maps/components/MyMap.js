@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import {  } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
+import googleMapsApiKey from '../../.env.js'
 
 const loadGoogleMapsApi = require('load-google-maps-api')
 
@@ -28,7 +29,7 @@ class MyMap extends Component {
     const firstStop = stops[0]
     // initialize map variable which will be the instance of google map
     let map
-    loadGoogleMapsApi({key: 'AIzaSyAAE6Tu5R06UneZxj4JPUuPtbSiwegGCWk'})
+    loadGoogleMapsApi({key: googleMapsApiKey})
       .then((googleMaps) => {
 
         map = new googleMaps.Map(document.querySelector('.map'), {
@@ -171,7 +172,7 @@ class MyMap extends Component {
               const marker = new google.maps.Marker({
                 position: results[0].geometry.location,
                 map: map,
-                title: 'Hello World!'
+                title: 'this is a stop on the trip'
               })
             } else {
               alert('Geocode was not successful for the following reason: ' + status)
