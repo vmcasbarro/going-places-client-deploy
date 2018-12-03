@@ -5,7 +5,7 @@ import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 import googleMapsApiKey from '../../.env.js'
-
+const googleTranslate = require('google-translate')(googleMapsApiKey)
 
 class Stop extends Component {
   constructor (props) {
@@ -21,7 +21,8 @@ class Stop extends Component {
 
 
     // This binding is necessary to make `this` work in the callback
-    // this.onDeleteTrip = this.onDeleteTrip.bind(this)
+    this.onTranslate = this.onTranslate.bind(this)
+    this.updateTranslation = this.updateTranslation.bind(this)
     // this.onGetTrip = this.onGetTrip.bind(this)
 
     // get trip id which is used by most of the methods in this class
@@ -30,13 +31,36 @@ class Stop extends Component {
   }
 
   handleChange = event => {
-    const newtranslation = { ...this.state.translation, [event.target.name]: event.target.value }
-    this.setState({ translation: newtranslation })
+    const newTranslation = { ...this.state.translation, [event.target.name]: event.target.value }
+    this.setState({ translation: newTranslation })
+  }
+
+  updateTranslation = data => {
+    const newTranslation = { ...this.state.translation, translatedText: data }
+    this.setState({ translation: newTranslation })
   }
 
   onTranslate (event) {
+    const { translation, translatedText } = this.state
     event.preventDefault()
-    console.log('submitted')
+
+    // promisify googleTranslate API call
+    const transPromise = function (text, language) {
+      return new Promise((resolve, reject) => {
+        googleTranslate.translate(text, language, (err, data) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(data)
+          }
+        })
+      })
+    }
+
+    transPromise(translation.textToTranslate, 'en')
+      .then((data) => {this.updateTranslation(data.translatedText)})
+      .catch(console.error)
+
   }
   // onGetTrip() {
   //   const { flash, history, user } = this.props
@@ -65,7 +89,8 @@ class Stop extends Component {
 
     const translationDiv = {
       'height': '300px',
-      'background-color': 'blue'
+      background: 'blue',
+      color: 'white'
     }
     const weatherDiv = {
       height: '300px',
@@ -99,7 +124,7 @@ class Stop extends Component {
                 />
                 <button type="submit">translate text</button>
               </form>
-              <div className="translation-response">{translation.translatedText}</div>
+              <div className="translation-response" >{translation.translatedText}</div>
             </div>
             <div className="col-6" style={weatherDiv}>weather</div>
           </div>
