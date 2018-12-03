@@ -151,6 +151,7 @@ class MyMap extends Component {
         })
 
         const geocoder = new googleMaps.Geocoder()
+        const bounds = new googleMaps.LatLngBounds()
         const address = firstStop.location
 
         geocoder.geocode( { 'address': address}, function(results, status) {
@@ -174,9 +175,14 @@ class MyMap extends Component {
                 map: map,
                 title: 'this is a stop on the trip'
               })
+              console.log('marker is:', marker)
+              console.log(marker.position)
+              //extend the bounds to include each marker's position
+              bounds.extend(marker.position)
             } else {
               alert('Geocode was not successful for the following reason: ' + status)
             }
+            map.fitBounds(bounds)
           })
         })
       })
