@@ -4,6 +4,8 @@ import { withRouter, Link } from 'react-router-dom'
 import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
+import googleMapsApiKey from '../../.env.js'
+
 
 class Stop extends Component {
   constructor (props) {
@@ -97,6 +99,7 @@ class Stop extends Component {
                 />
                 <button type="submit">translate text</button>
               </form>
+              <div className="translation-response">{translation.translatedText}</div>
             </div>
             <div className="col-6" style={weatherDiv}>weather</div>
           </div>
