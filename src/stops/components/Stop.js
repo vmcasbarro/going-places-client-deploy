@@ -16,8 +16,11 @@ class Stop extends Component {
         textToTranslate: '',
         translatedText: ''
       },
-      translations: []
+      translations: [],
+      stop: {},
+      stopNumber: null
     }
+
 
 
     // This binding is necessary to make `this` work in the callback
@@ -25,8 +28,17 @@ class Stop extends Component {
     this.updateTranslation = this.updateTranslation.bind(this)
     // this.onGetTrip = this.onGetTrip.bind(this)
 
-    // get trip id which is used by most of the methods in this class
-    // this.id = this.props.match.params.id
+    // get STOP id which is used by most of the methods in this class
+    this.id = this.props.match.params.id
+  }
+
+  componentDidMount() {
+    const { stops } = this.props
+    const stop = stops.find(stop => stop.id == this.id)
+    const number = stops.indexOf(stop) + 1
+    console.log(number)
+    this.setState({ stop: stop })
+    this.setState({ stopNumber: number })
 
   }
 
@@ -62,30 +74,9 @@ class Stop extends Component {
       .catch(console.error)
 
   }
-  // onGetTrip() {
-  //   const { flash, history, user } = this.props
-  //   const { trip } = this.state
-  //
-  //   getTrip(this.id, user)
-  //     .then(handleErrors)
-  //     .then(response => response.json())
-  //     .then((jsonResponse) => this.setState({trip: jsonResponse.trip}))
-  //     .catch(() => flash(messages.getTripsFailure, 'flash-error'))
-  // }
-
-  // componentDidMount() {
-  //   this.onGetTrip()
-  // }
-
-  // onDeleteTrip(event) {
-  //   const { user } = this.props
-  //   const id = event.target.dataset['id']
-  //
-  //   deleteTrip(id, user)
-  //     .then(() => {this.onGetTrips()})
-  // }
 
   render () {
+
 
     const translationDiv = {
       'height': '300px',
@@ -102,15 +93,15 @@ class Stop extends Component {
       color: 'white'
     }
 
-    const { translation } = this.state
+    const { translation, stop, stopNumber } = this.state
 
     return(
       <React.Fragment>
 
-        <h1>Hello World (stop)</h1>
+        <h1>Stop No. {stopNumber}: {stop.location}</h1>
         <div className="container">
           <div className="row">
-            <div className="col-6" style={translationDiv}>
+            <div className="col-md-6" style={translationDiv}>
               translation
               <form className='translation-form' onSubmit={this.onTranslate}>
                 <br/>
@@ -126,7 +117,7 @@ class Stop extends Component {
               </form>
               <div className="translation-response" >{translation.translatedText}</div>
             </div>
-            <div className="col-6" style={weatherDiv}>weather</div>
+            <div className="col-md-6" style={weatherDiv}>weather</div>
           </div>
           <div className="row">
             <div className="col-12" style={mapDiv}>map</div>
