@@ -99,6 +99,7 @@ class Stop extends Component {
       <React.Fragment>
 
         <h1>Stop No. {stopNumber}: {stop.location}</h1>
+        <h3>{stop.date}</h3>
         <div className="container">
           <div className="row">
             <div className="col-md-6" style={translationDiv}>
