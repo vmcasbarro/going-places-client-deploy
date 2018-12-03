@@ -16,6 +16,7 @@ import Trip from './trips/components/Trip'
 import RenameTrip from './trips/components/RenameTrip'
 import NewStop from './stops/components/NewStop'
 import MyMap from './maps/components/MyMap'
+import Stop from './stops/components/Stop'
 
 class App extends Component {
   constructor () {
@@ -114,6 +115,15 @@ class App extends Component {
 
           <AuthenticatedRoute user={user} exact path='/trips/:id/add-stop' render={() => (
             <NewStop flash={this.flash} user={user} />
+          )} />
+
+          <AuthenticatedRoute user={user} exact path='/trips/:id/stops/:id' render={() => (
+            <Stop
+              flash={this.flash}
+              user={user} 
+              trip={trip}
+              stops={stops}
+            />
           )} />
 
 
