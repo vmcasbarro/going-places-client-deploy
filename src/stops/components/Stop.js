@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { handleErrors, createTrip, getTrip, deleteTrip } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
-import googleMapsApiKey from '../../.env.js'
+import { googleMapsApiKey } from '../../.env.js'
 const googleTranslate = require('google-translate')(googleMapsApiKey)
 
 class Stop extends Component {
