@@ -387,12 +387,12 @@ class Stop extends Component {
 
 
     const translationDiv = {
-      'height': '300px',
+      'height': '400px',
       background: 'blue',
       color: 'white'
     }
     const weatherDiv = {
-      height: '300px',
+      height: '400px',
       background: 'white'
     }
     const mapDiv = {
@@ -430,13 +430,16 @@ class Stop extends Component {
               <div className="translation-response" >{translation.translatedText}</div>
             </div>
             <div className="col-md-6" style={weatherDiv}>
+              <div className="row">highs/lows this week</div>
+              <div className="row">
 
-              <LineChart
-                data={chartData}
-                options={this.chartOptions}
-                width="500"
-                height="300"
-              />
+                <LineChart
+                  data={chartData}
+                  options={this.chartOptions}
+                  width="500"
+                  height="300"
+                />
+              </div>
 
             </div>
           </div>
