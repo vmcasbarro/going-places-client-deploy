@@ -18,12 +18,26 @@ class VisionTranslate extends Component {
     super(props)
 
     this.state = {
-      newFile: {}
+      newFile: {},
+      visionResponse: null
     }
 
     // This binding is necessary to make `this` work in the callback
     this.onGetText = this.onGetText.bind(this)
+    this.removeBase64Prefix = this.removeBase64Prefix.bind(this)
 
+  }
+
+  removeBase64Prefix(){
+    // destructure the state to get the base64 string (with prefix)
+    const { base64 } = this.state.newFile
+    console.log(base64)
+    // find the index of ',', which is the end of the prefix
+    const startingPoint = (base64.indexOf(',')) + 1
+    const trimmedBase64 = base64.slice(startingPoint)
+    console.log(trimmedBase64)
+    const trimmedNewFile = { ...this.state.newFile, base64: trimmedBase64 }
+    this.setState({ newFile: trimmedNewFile})
   }
 
   onGetText(event) {
@@ -33,16 +47,19 @@ class VisionTranslate extends Component {
     event.preventDefault()
     console.log('clicked!')
     getText(base64, googleMapsApiKey)
-      .then(console.log)
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        this.setState({ visionResponse: jsonResponse.responses[0].textAnnotations[0]
+        })
+      })
       .then(handleErrors)
-      .then(() => flash(messages.createStopSuccess, 'flash-success'))
-      .then(() => {this.redirect()})
       .catch(() => flash(messages.getTextFailure, 'flash-error'))
   }
 
-  // Callback~
+  // Callback
   getFile(file){
     this.setState({ newFile: file })
+    this.removeBase64Prefix()
   }
 
   componentDidMount() {
