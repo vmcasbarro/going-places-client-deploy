@@ -22,50 +22,47 @@ class Stop extends Component {
       stopNumber: null,
       weatherData: {},
       dailyHighs: [],
-      dailyLows: []
+      dailyLows: [],
+      chartData: {
+        labels: ['today', '+1', '+2', '+3', '+4', '+5', '+6', '+7'],
+        datasets: [
+          {
+            label: 'Daily High Temp',
+            fillColor: 'rgba(220,220,220,0.2)',
+            strokeColor: 'rgba(220,220,220,1)',
+            pointColor: 'rgba(220,220,220,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data: [0, 0, 0, 0, 0, 0, 0, 0]
+          },
+          {
+            label: 'Daily Low Temp',
+            fillColor: 'rgba(151,187,205,0.2)',
+            strokeColor: 'rgba(151,187,205,1)',
+            pointColor: 'rgba(151,187,205,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(151,187,205,1)',
+            data: [0, 0, 0, 0, 0, 0, 0, 0]
+          }
+        ]
+      }
     }
-
-
 
     // This binding is necessary to make `this` work in the callback
     this.onTranslate = this.onTranslate.bind(this)
     this.updateTranslation = this.updateTranslation.bind(this)
     this.getTemps = this.getTemps.bind(this)
 
-
     // get STOP id which is used by most of the methods in this class
     this.id = this.props.match.params.id
 
   }
 
-  chartData = {
-    labels: ['today', '+1', '+2', '+3', '+4', '+5', '+6', '+7'],
-    datasets: [
-      {
-        label: 'Daily High Temp',
-        fillColor: 'rgba(220,220,220,0.2)',
-        strokeColor: 'rgba(220,220,220,1)',
-        pointColor: 'rgba(220,220,220,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(220,220,220,1)',
-        data: [65, 59, 0, 80, 81, 56, 55, 40]
-      },
-      {
-        label: 'Daily Low Temp',
-        fillColor: 'rgba(151,187,205,0.2)',
-        strokeColor: 'rgba(151,187,205,1)',
-        pointColor: 'rgba(151,187,205,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: [28, 48, 0, 40, 19, 86, 27, 90]
-      }
-    ]
-  }
-
   getTemps () {
     const { daily: {data} = {}} = this.state.weatherData
+    const { labels } = this.state.chartData
     console.log(data)
     const dailyHighs = data.map((day) => {
       return day.temperatureHigh
@@ -75,8 +72,16 @@ class Stop extends Component {
     })
     this.setState({dailyHighs: dailyHighs})
     this.setState({dailyLows: dailyLows})
-    // console.log('highs', dailyHighs)
-    // console.log('lows', dailyLows)
+
+    const newDatasets = { ...this.state.chartData.datasets }
+    newDatasets[0].data = this.state.dailyHighs
+    newDatasets[1].data = this.state.dailyLows
+    console.log(newDatasets)
+
+    // updating state to display new label data
+    const newChartData = { ...this.state.chartData, labels: ['today', '+1', '+2', '+3', '+4', '+5', '+6', '+7'] }
+    this.setState({ chartData: newChartData })
+
   }
 
   chartOptions = {
@@ -129,6 +134,7 @@ class Stop extends Component {
 
   onGetForecast(lat, long) {
     const { flash } = this.props
+    const { dailyHighs, dailyLows } = this.state
     console.log(lat, long)
     console.log(getForecast)
     getForecast(lat, long)
@@ -150,6 +156,9 @@ class Stop extends Component {
 
     // handle weather retrieval
     this.onGetForecast('42.369401', '-71.101173')
+
+    // create line chart for weather
+    // this.initLineChart()
 
   }
 
@@ -204,7 +213,7 @@ class Stop extends Component {
       color: 'white'
     }
 
-    const { translation, stop, stopNumber } = this.state
+    const { translation, stop, stopNumber, chartData } = this.state
 
     return(
       <React.Fragment>
@@ -230,12 +239,12 @@ class Stop extends Component {
               <div className="translation-response" >{translation.translatedText}</div>
             </div>
             <div className="col-md-6" style={weatherDiv}>
+
               <LineChart
-                data={this.chartData}
+                data={chartData}
                 options={this.chartOptions}
-                width="500"
-                height="250"
               />
+
             </div>
           </div>
           <div className="row">
