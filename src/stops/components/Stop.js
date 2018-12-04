@@ -20,7 +20,8 @@ class Stop extends Component {
       },
       translations: [],
       stop: {},
-      stopNumber: null
+      stopNumber: null,
+      weatherData: {}
     }
 
 
@@ -41,7 +42,7 @@ class Stop extends Component {
     getForecast(lat, long)
       .then(handleErrors)
       .then(response => response.json())
-      .then(console.log)
+      .then((JSONresponse) => {this.setState({ weatherData: JSONresponse })})
       .catch(() => flash(messages.apiFailure, 'flash-error'))
   }
 
