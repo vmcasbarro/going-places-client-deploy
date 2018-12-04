@@ -14,9 +14,9 @@ class StopMap extends Component {
     super(props)
 
     this.state = {
-      stop: this.props.stop,
-      locLat: null,
-      locLong: null
+      locLat: 1.352083,
+      locLong: 103,
+      stop: {}
     }
 
     // This binding is necessary to make `this` work in the callback
@@ -30,16 +30,26 @@ class StopMap extends Component {
     }
   }
 
+  onGetStop() {
+    const { flash } = this.props
+    const { dailyHighs, dailyLows, lat, long } = this.state
+    getStop(this.tripId, this.id, user)
+      .then(handleErrors)
+      .then(response => response.json())
+      .then((jsonResponse) => this.setState({stop: jsonResponse.stop}))
+      .then(() => this.onGetLatLng())
+
+      .catch(() => flash(messages.getTripsFailure, 'flash-error'))
+  }
+
   componentDidMount() {
     // destructure stop passed in as a prop from Stop
-    const { stop } = this.props
+    const { stop } = this.state
     // this returns an empty object, not sure why...
     console.log('what stop?', stop)
 
     // initialize map variable which will be the instance of google map
     let map
-    let lat
-    let long
 
     // load google Maps API, which returns a promise
     loadGoogleMapsApi({key: googleMapsApiKey})
@@ -165,6 +175,8 @@ class StopMap extends Component {
 
         const geocoder = new googleMaps.Geocoder()
         const address = stop.location
+        let lat
+        let long
 
         geocoder.geocode( { 'address': 'New York'}, function(results, status) {
           if (status == 'OK') {
