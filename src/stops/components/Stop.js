@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 
-import { handleErrors, getForecast } from '../api'
+import { handleErrors, getForecast, getStop } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 import { googleMapsApiKey } from '../../.env.js'
 const googleTranslate = require('google-translate')(googleMapsApiKey)
 const LineChart = require('react-chartjs').Line
 import StopMap from './StopMap'
+
+const loadGoogleMapsApi = require('load-google-maps-api')
 
 class Stop extends Component {
   constructor (props) {
@@ -21,6 +23,10 @@ class Stop extends Component {
       translations: [],
       stop: {},
       stopNumber: null,
+
+      lat: 40.7127753,
+      long: -74.0059728,
+
       weatherData: {},
       dailyHighs: [],
       dailyLows: [],
@@ -58,7 +64,52 @@ class Stop extends Component {
 
     // get STOP id which is used by most of the methods in this class
     this.id = this.props.match.params.id
+    this.tripId = this.props.trip.id
 
+  }
+
+
+
+  onGetLatLng() {
+
+    loadGoogleMapsApi({key: googleMapsApiKey})
+      .then((googleMaps) => {
+        const geocoder = new googleMaps.Geocoder()
+        const { location } = this.state.stop
+        console.log(location)
+
+        // promisify geocoder
+        const geocoderPromise = function (address) {
+          return new Promise((resolve, reject) => {
+            geocoder.geocode(address, (results, status) => {
+              if (status !== 'OK') {
+                reject(err)
+              } else {
+                resolve(results)
+              }
+            })
+          })
+        }
+
+        geocoderPromise( { 'address': location} )
+          .then((results) => {
+            this.setState({ lat: results[0].geometry.location.lat(), long: results[0].geometry.location.lng()})
+          })
+          .then(() => this.onGetForecast())
+          // .then((results) => {console.log(results)})
+          .catch(console.error)
+
+
+        // geocoder.geocode( { 'address': 'New York'}, function(results, status) {
+        //   if (status == 'OK') {
+        //     lat = results[0].geometry.location.lat()
+        //     long = results[0].geometry.location.lng()
+        //     console.log(lat, long)
+        //   } else {
+        //     alert('Geocode was not successful for the following reason: ' + status)
+        //   }
+        // })
+      })
   }
 
   getTemps () {
@@ -131,10 +182,9 @@ class Stop extends Component {
   	offsetGridLines : false
   }
 
-  onGetForecast(lat, long) {
+  onGetForecast() {
     const { flash } = this.props
-    const { dailyHighs, dailyLows } = this.state
-    console.log(lat, long)
+    const { dailyHighs, dailyLows, lat, long } = this.state
     getForecast(lat, long)
       .then(handleErrors)
       .then(response => response.json())
@@ -143,21 +193,36 @@ class Stop extends Component {
       .catch(() => flash(messages.apiFailure, 'flash-error'))
   }
 
+  onGetStop() {
+    const { flash, user } = this.props
+    const { dailyHighs, dailyLows, lat, long } = this.state
+    getStop(this.tripId, this.id, user)
+      .then(handleErrors)
+      .then(response => response.json())
+      .then((jsonResponse) => this.setState({stop: jsonResponse.stop}))
+      .then(() => this.onGetLatLng())
+
+      .catch(() => flash(messages.getTripsFailure, 'flash-error'))
+  }
+
   componentDidMount() {
+
+    this.onGetStop()
+
     // handle stop info
     const { stops } = this.props
     const stop = stops.find(stop => stop.id == this.id)
     const number = stops.indexOf(stop) + 1
-    this.setState({ stop: stop })
     this.setState({ stopNumber: number })
 
     // handle weather retrieval
-    this.onGetForecast('42.369401', '-71.101173')
+    // this.onGetForecast()
 
     // create line chart for weather
     // this.initLineChart()
 
   }
+
 
   handleChange = event => {
     const newTranslation = { ...this.state.translation, [event.target.name]: event.target.value }
@@ -251,6 +316,8 @@ class Stop extends Component {
               <StopMap
                 title="hello world"
                 stop={stop}
+                setLat={this.setLat}
+                setLong={this.setLong}
               />
             </div>
           </div>

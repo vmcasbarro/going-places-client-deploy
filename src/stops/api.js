@@ -35,6 +35,15 @@ export const getStops = (tripId, user) => {
   })
 }
 
+export const getStop = (tripId, stopId, user) => {
+  return fetch(apiUrl + '/trips/' + tripId + '/stops/' + stopId, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}
+
 export const deleteTrip = (id, user) => {
   return fetch(apiUrl + '/trips/' + id, {
     method: 'DELETE',

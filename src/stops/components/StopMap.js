@@ -14,12 +14,20 @@ class StopMap extends Component {
     super(props)
 
     this.state = {
-
+      stop: this.props.stop,
+      locLat: null,
+      locLong: null
     }
 
     // This binding is necessary to make `this` work in the callback
     // this.componentDidMount = this.componentDidMount.bind(this)
 
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.value !== this.props.value){
+      this.setState({stop:nextProps.value})
+    }
   }
 
   componentDidMount() {
@@ -30,6 +38,8 @@ class StopMap extends Component {
 
     // initialize map variable which will be the instance of google map
     let map
+    let lat
+    let long
 
     // load google Maps API, which returns a promise
     loadGoogleMapsApi({key: googleMapsApiKey})
@@ -159,8 +169,9 @@ class StopMap extends Component {
         geocoder.geocode( { 'address': 'New York'}, function(results, status) {
           if (status == 'OK') {
             map.setCenter(results[0].geometry.location)
-            console.log(results[0].geometry.location.lat())
-            console.log(results[0].geometry.location.lng())
+            lat = results[0].geometry.location.lat()
+            long = results[0].geometry.location.lng()
+            console.log(lat, long)
             const marker = new google.maps.Marker({
               position: results[0].geometry.location,
               map: map,
@@ -174,6 +185,7 @@ class StopMap extends Component {
 
       })
 
+
   }
 
   render () {
@@ -181,7 +193,7 @@ class StopMap extends Component {
       height: '500px'
     }
 
-    const { title } = this.state
+    const { title } = this.props
 
 
 
