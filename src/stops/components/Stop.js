@@ -64,7 +64,6 @@ class Stop extends Component {
   getTemps () {
     const { daily: {data} = {}} = this.state.weatherData
     const { labels } = this.state.chartData
-    console.log(data)
     const dailyHighs = data.map((day) => {
       return day.temperatureHigh
     })
@@ -77,7 +76,6 @@ class Stop extends Component {
     const newDatasets = { ...this.state.chartData.datasets }
     newDatasets[0].data = this.state.dailyHighs
     newDatasets[1].data = this.state.dailyLows
-    console.log(newDatasets)
 
     // updating state to display new label data
     const newChartData = { ...this.state.chartData, labels: ['today', '+1', '+2', '+3', '+4', '+5', '+6', '+7'] }
@@ -137,7 +135,6 @@ class Stop extends Component {
     const { flash } = this.props
     const { dailyHighs, dailyLows } = this.state
     console.log(lat, long)
-    console.log(getForecast)
     getForecast(lat, long)
       .then(handleErrors)
       .then(response => response.json())
@@ -151,7 +148,6 @@ class Stop extends Component {
     const { stops } = this.props
     const stop = stops.find(stop => stop.id == this.id)
     const number = stops.indexOf(stop) + 1
-    console.log(number)
     this.setState({ stop: stop })
     this.setState({ stopNumber: number })
 
@@ -252,7 +248,10 @@ class Stop extends Component {
           </div>
           <div className="row">
             <div className="col-12" style={mapDiv}>
-              <StopMap title="hello world" stop={stop}/>
+              <StopMap
+                title="hello world"
+                stop={stop}
+              />
             </div>
           </div>
         </div>
