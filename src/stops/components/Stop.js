@@ -8,6 +8,7 @@ import { googleMapsApiKey } from '../../.env.js'
 const googleTranslate = require('google-translate')(googleMapsApiKey)
 const LineChart = require('react-chartjs').Line
 import StopMap from './StopMap'
+import VisionTranslate from './VisionTranslate'
 
 const loadGoogleMapsApi = require('load-google-maps-api')
 
@@ -66,9 +67,9 @@ class Stop extends Component {
     this.id = this.props.match.params.id
     this.tripId = this.props.trip.id
 
+    const { flash } = this.props
+    this.newFlash = flash
   }
-
-
 
   onGetLatLng() {
 
@@ -428,6 +429,9 @@ class Stop extends Component {
                 <button type="submit">translate text</button>
               </form>
               <div className="translation-response" >{translation.translatedText}</div>
+              <VisionTranslate
+                flash={this.newFlash}
+              />
             </div>
             <div className="col-md-6" style={weatherDiv}>
               <div className="row">highs/lows this week</div>
