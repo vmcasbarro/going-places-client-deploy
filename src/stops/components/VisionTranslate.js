@@ -52,7 +52,6 @@ class VisionTranslate extends Component {
         this.setState({ visionResponse: jsonResponse.responses[0].textAnnotations[0]
         })
       })
-      .then(handleErrors)
       .catch(() => flash(messages.getTextFailure, 'flash-error'))
   }
 
