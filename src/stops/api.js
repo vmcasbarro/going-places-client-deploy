@@ -103,3 +103,28 @@ export const getForecast = (lat, long) => {
     })
   })
 }
+
+export const getText = (imgBase64, key) => {
+  return fetch(`https://vision.googleapis.com/v1/images:annotate?key=${key}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      requests:[
+        {
+          image:{
+            content: imgBase64
+          },
+          features:[
+            {
+              type: 'TEXT_DETECTION',
+              maxResults: 1
+            }
+          ]
+        }
+      ]
+
+    })
+  })
+}
