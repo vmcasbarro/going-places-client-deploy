@@ -7,6 +7,7 @@ import apiUrl from '../../apiConfig'
 import { googleMapsApiKey } from '../../.env.js'
 const googleTranslate = require('google-translate')(googleMapsApiKey)
 const LineChart = require('react-chartjs').Line
+import StopMap from './StopMap'
 
 class Stop extends Component {
   constructor (props) {
@@ -205,7 +206,7 @@ class Stop extends Component {
     }
     const weatherDiv = {
       height: '300px',
-      background: 'green'
+      background: 'white'
     }
     const mapDiv = {
       height: '300px',
@@ -243,12 +244,16 @@ class Stop extends Component {
               <LineChart
                 data={chartData}
                 options={this.chartOptions}
+                width="500"
+                height="300"
               />
 
             </div>
           </div>
           <div className="row">
-            <div className="col-12" style={mapDiv}>map</div>
+            <div className="col-12" style={mapDiv}>
+              <StopMap title="hello world" stop={stop}/>
+            </div>
           </div>
         </div>
 
