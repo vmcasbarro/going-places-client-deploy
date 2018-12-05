@@ -8,7 +8,7 @@ import apiUrl from '../../apiConfig'
 import { googleMapsApiKey } from '../../.env.js'
 const loadGoogleMapsApi = require('load-google-maps-api')
 
-import DOMPurify from 'dompurify' 
+import DOMPurify from 'dompurify'
 
 // node module for converting image to base64 string
 import FileBase64 from 'react-file-base64'
@@ -21,6 +21,7 @@ class VisionTranslate extends Component {
 
     this.state = {
       newFile: {},
+      brandNewFile: {},
       visionResponse: {
         description: ''
       }
@@ -42,12 +43,12 @@ class VisionTranslate extends Component {
     const trimmedBase64 = base64.slice(startingPoint)
     console.log(trimmedBase64)
     const trimmedNewFile = { ...this.state.newFile, base64: trimmedBase64 }
-    this.setState({ newFile: trimmedNewFile})
+    this.setState({ brandNewFile: trimmedNewFile})
   }
 
   onGetText(event) {
     const { flash } = this.props
-    const { base64 } = this.state.newFile
+    const { base64 } = this.state.brandNewFile
     console.log(base64, googleMapsApiKey)
     event.preventDefault()
     console.log('clicked!')
@@ -72,21 +73,27 @@ class VisionTranslate extends Component {
 
   render () {
     const { description } = this.state.visionResponse
+    const { base64 } = this.state.newFile
 
     const content = {
-      height: '300px'
+      // height: '300px'
+    }
+
+    const thumbnailSize = {
+      height: '200px'
     }
 
     return(
       <React.Fragment>
 
-        <h1>Hello World</h1>
         <FileBase64
           multiple={ false }
           onDone={ this.getFile.bind(this) } />
         <button type="submit" onClick={this.onGetText}>get text</button>
         <div style={content}>{DOMPurify.sanitize(description)}</div>
-
+        <div style={thumbnailSize}>
+          { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
+        </div>
 
 
       </React.Fragment>
