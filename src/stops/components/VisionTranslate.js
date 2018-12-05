@@ -8,6 +8,8 @@ import apiUrl from '../../apiConfig'
 import { googleMapsApiKey } from '../../.env.js'
 const loadGoogleMapsApi = require('load-google-maps-api')
 
+import DOMPurify from 'dompurify' 
+
 // node module for converting image to base64 string
 import FileBase64 from 'react-file-base64'
 
@@ -19,7 +21,10 @@ class VisionTranslate extends Component {
 
     this.state = {
       newFile: {},
-      visionResponse: null
+      visionResponse: {
+        description: ''
+      }
+
     }
 
     // This binding is necessary to make `this` work in the callback
@@ -66,6 +71,11 @@ class VisionTranslate extends Component {
   }
 
   render () {
+    const { description } = this.state.visionResponse
+
+    const content = {
+      height: '300px'
+    }
 
     return(
       <React.Fragment>
@@ -75,6 +85,7 @@ class VisionTranslate extends Component {
           multiple={ false }
           onDone={ this.getFile.bind(this) } />
         <button type="submit" onClick={this.onGetText}>get text</button>
+        <div style={content}>{DOMPurify.sanitize(description)}</div>
 
 
 
