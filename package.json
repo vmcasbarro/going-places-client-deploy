@@ -18,6 +18,7 @@
     "chart.js": "^1.1.1",
     "css-loader": "0.28.7",
     "dark-sky": "^1.1.4",
+    "dompurify": "^1.0.8",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "4.10.0",
