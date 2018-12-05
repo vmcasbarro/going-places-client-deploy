@@ -18,6 +18,8 @@ import NewStop from './stops/components/NewStop'
 import MyMap from './maps/components/MyMap'
 import Stop from './stops/components/Stop'
 
+import 'typeface-roboto'
+
 class App extends Component {
   constructor () {
     super()
@@ -59,7 +61,7 @@ class App extends Component {
         <Header user={user} />
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
-        <main className="container">
+        <main>
 
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
@@ -120,7 +122,7 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/trips/:id/stops/:id' render={() => (
             <Stop
               flash={this.flash}
-              user={user} 
+              user={user}
               trip={trip}
               stops={stops}
             />

@@ -263,6 +263,8 @@ class Stop extends Component {
 
   chartOptions = {
 
+    responsive: true,
+
   	///Boolean - Whether grid lines are shown across the chart
   	scaleShowGridLines : true,
 
@@ -388,6 +390,7 @@ class Stop extends Component {
 
 
     const translationDiv = {
+      'min-height': '300px'
       // 'height': '400px',
       // background: 'blue',
       // color: 'white'
@@ -399,10 +402,14 @@ class Stop extends Component {
     const mapDiv = {
       height: '300px',
       background: 'black',
-      color: 'white'
+      color: 'white',
+      'margin-bottom': '10vh'
     }
-    const styles = {
-      height: '500px'
+    const map = {
+      height: '500px',
+      'margin-bottom': '20px'
+    }
+    const container = {
     }
 
     const { translation, stop, stopNumber, chartData } = this.state
@@ -412,32 +419,10 @@ class Stop extends Component {
 
         <h1>Stop No. {stopNumber}: {stop.location}</h1>
         <h3>{stop.date}</h3>
-        <div className="container">
+        <div className="map" style={map}></div>
+        <div className="container" style={container}>
           <div className="row">
-            <div className="col-md-6" style={translationDiv}>
-              <div className="row">
-                <div className="col-12">
-                  translation
-                  <form className='translation-form' onSubmit={this.onTranslate}>
-                    <br/>
-                    <input
-                      required
-                      name="textToTranslate"
-                      value={translation.textToTranslate}
-                      type="text"
-                      placeholder="ex, 'Le vent se léve...'"
-                      onChange={this.handleChange}
-                    />
-                    <button type="submit">translate text</button>
-                  </form>
-                  <div className="translation-response" >{translation.translatedText}</div>
-                  <VisionTranslate
-                    flash={this.newFlash}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6" style={weatherDiv}>
+            <div className="col-12 col-lg-6" style={weatherDiv}>
               <div className="row">highs/lows this week</div>
               <div className="row">
 
@@ -450,10 +435,23 @@ class Stop extends Component {
               </div>
 
             </div>
-          </div>
-          <div className="row">
-            <div className="col-12" >
-              <div className="map" style={styles}></div>
+            <div className="col-12 col-lg-6" style={translationDiv}>
+              translation
+              <form className='translation-form' onSubmit={this.onTranslate}>
+                <input
+                  required
+                  name="textToTranslate"
+                  value={translation.textToTranslate}
+                  type="text"
+                  placeholder="ex, 'Le vent se léve...'"
+                  onChange={this.handleChange}
+                />
+                <button type="submit">translate text</button>
+              </form>
+              <div className="translation-response" >{translation.translatedText}</div>
+              <VisionTranslate
+                flash={this.newFlash}
+              />
             </div>
           </div>
         </div>

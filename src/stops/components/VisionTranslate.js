@@ -110,7 +110,7 @@ class VisionTranslate extends Component {
     }
 
     const thumbnailSize = {
-      height: '200px'
+      // height: '200px'
     }
 
     return(
@@ -122,16 +122,17 @@ class VisionTranslate extends Component {
               multiple={ false }
               onDone={ this.getFile.bind(this) } />
             <button type="submit" onClick={this.onGetText}>get text</button>
+            <div style={thumbnailSize}>
+              { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
+            </div>
             <div style={content}>
               {description && <span> <code>detected text:</code> </span> }
               {DOMPurify.sanitize(description)}
             </div>
+            <br/>
             <div style={content}>
               {description && <span> <code>translated text:</code> </span> }
               {DOMPurify.sanitize(descriptionTranslated)}
-            </div>
-            <div style={thumbnailSize}>
-              { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
             </div>
           </div>
         </div>
