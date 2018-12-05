@@ -115,21 +115,25 @@ class VisionTranslate extends Component {
 
     return(
       <React.Fragment>
+        <div className="row">
+          <div className="col-12">
 
-        <FileBase64
-          multiple={ false }
-          onDone={ this.getFile.bind(this) } />
-        <button type="submit" onClick={this.onGetText}>get text</button>
-        <div style={content}>
-          {description && <span> <code>detected text:</code> </span> }
-          {DOMPurify.sanitize(description)}
-        </div>
-        <div style={content}>
-          {description && <span> <code>translated text:</code> </span> }
-          {DOMPurify.sanitize(descriptionTranslated)}
-        </div>
-        <div style={thumbnailSize}>
-          { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
+            <FileBase64
+              multiple={ false }
+              onDone={ this.getFile.bind(this) } />
+            <button type="submit" onClick={this.onGetText}>get text</button>
+            <div style={content}>
+              {description && <span> <code>detected text:</code> </span> }
+              {DOMPurify.sanitize(description)}
+            </div>
+            <div style={content}>
+              {description && <span> <code>translated text:</code> </span> }
+              {DOMPurify.sanitize(descriptionTranslated)}
+            </div>
+            <div style={thumbnailSize}>
+              { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
+            </div>
+          </div>
         </div>
 
 

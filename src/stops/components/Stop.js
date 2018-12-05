@@ -388,13 +388,13 @@ class Stop extends Component {
 
 
     const translationDiv = {
-      'height': '400px',
-      background: 'blue',
-      color: 'white'
+      // 'height': '400px',
+      // background: 'blue',
+      // color: 'white'
     }
     const weatherDiv = {
-      height: '400px',
-      background: 'white'
+      // height: '400px',
+      // background: 'white'
     }
     const mapDiv = {
       height: '300px',
@@ -415,23 +415,27 @@ class Stop extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-6" style={translationDiv}>
-              translation
-              <form className='translation-form' onSubmit={this.onTranslate}>
-                <br/>
-                <input
-                  required
-                  name="textToTranslate"
-                  value={translation.textToTranslate}
-                  type="text"
-                  placeholder="ex, 'Le vent se léve...'"
-                  onChange={this.handleChange}
-                />
-                <button type="submit">translate text</button>
-              </form>
-              <div className="translation-response" >{translation.translatedText}</div>
-              <VisionTranslate
-                flash={this.newFlash}
-              />
+              <div className="row">
+                <div className="col-12">
+                  translation
+                  <form className='translation-form' onSubmit={this.onTranslate}>
+                    <br/>
+                    <input
+                      required
+                      name="textToTranslate"
+                      value={translation.textToTranslate}
+                      type="text"
+                      placeholder="ex, 'Le vent se léve...'"
+                      onChange={this.handleChange}
+                    />
+                    <button type="submit">translate text</button>
+                  </form>
+                  <div className="translation-response" >{translation.translatedText}</div>
+                  <VisionTranslate
+                    flash={this.newFlash}
+                  />
+                </div>
+              </div>
             </div>
             <div className="col-md-6" style={weatherDiv}>
               <div className="row">highs/lows this week</div>
