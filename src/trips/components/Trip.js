@@ -133,17 +133,25 @@ class Trip extends Component {
         <div>
           <AppBar position="static" color="default">
             <Toolbar>
+
               <Typography style={grow} variant="h6" color="inherit">
                 {trip && trip.name}
               </Typography>
-              <Link style={menuButton} exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
-              {stopList && <Link style={menuButton} exact to={ `/trips/${this.id}/map` }>map trip!</Link>}
+
+              <Link style={menuButton} exact to={ `/trips/${this.id}/rename` }>
+                <Button color="inherit">Rename Trip</Button>
+              </Link>
+
+              { stopList && <Link style={menuButton} exact to={ `/trips/${this.id}/map` }>
+                <Button variant="contained" color="primary">Map Trip!</Button>
+              </Link> }
+
             </Toolbar>
           </AppBar>
         </div>
         <div style={container}>
           <Grid container spacing={24}>
-
+            {stopList}
             <Grid item xs={12} sm={6} md={4} lg={3}>
               <Card>
                 <CardHeader

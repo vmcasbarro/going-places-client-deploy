@@ -36,22 +36,22 @@ class Stop extends Component {
         datasets: [
           {
             label: 'Daily High Temp',
-            fillColor: 'rgba(220,220,220,0.2)',
-            strokeColor: 'rgba(220,220,220,1)',
-            pointColor: 'rgba(220,220,220,1)',
+            fillColor: 'rgba(255, 99, 132, 0.2)',
+            strokeColor: 'rgba(255,99,132,1)',
+            pointColor: 'rgba(255,99,132,1)',
             pointStrokeColor: '#fff',
             pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
+            pointHighlightStroke: 'rgba(255,99,132,1)',
             data: [0, 0, 0, 0, 0, 0, 0, 0]
           },
           {
             label: 'Daily Low Temp',
-            fillColor: 'rgba(151,187,205,0.2)',
-            strokeColor: 'rgba(151,187,205,1)',
-            pointColor: 'rgba(151,187,205,1)',
+            fillColor: 'rgba(54, 162, 235, 0.2)',
+            strokeColor: 'rgba(54, 162, 235, 1)',
+            pointColor: 'rgba(54, 162, 235, 1)',
             pointStrokeColor: '#fff',
             pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(151,187,205,1)',
+            pointHighlightStroke: 'rgba(54, 162, 235, 1)',
             data: [0, 0, 0, 0, 0, 0, 0, 0]
           }
         ]
@@ -265,6 +265,13 @@ class Stop extends Component {
 
     responsive: true,
 
+    scales: {
+      yAxes: [{
+        display: true,
+        labelString: 'temp'
+      }]
+    },
+
   	///Boolean - Whether grid lines are shown across the chart
   	scaleShowGridLines : true,
 
@@ -397,7 +404,7 @@ class Stop extends Component {
     }
     const weatherDiv = {
       // height: '400px',
-      // background: 'white'
+      // background: 'black'
     }
     const mapDiv = {
       height: '300px',
