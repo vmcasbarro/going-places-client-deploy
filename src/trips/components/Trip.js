@@ -10,6 +10,24 @@ import apiUrl from '../../apiConfig'
 import AuthenticatedRoute from '../../auth/components/AuthenticatedRoute'
 import MyMap from '../../maps/components/MyMap'
 
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import PlaceIcon from '@material-ui/icons/Place'
+import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
+
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+
+
+
 class Trip extends Component {
   constructor (props) {
     super(props)
@@ -56,44 +74,104 @@ class Trip extends Component {
 
   render () {
     const { flash, user, trip, stops } = this.props
+
+
+
     console.log(trip)
-    let stopList
+    let stopList = null
     if (stops.length) {
 
       stopList = stops.map(stop=>{
         const { location, date, id } = stop
 
         return (
-          <li key={id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={id}>
+            <Card>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="stop">
+                    <PlaceIcon/>
+                  </Avatar>
+                }
+              />
+              <CardContent>
+                <Typography variant="h5" component="h2">
+                  <Link to={`/trips/${this.id}/stops/${id}`}>{location}</Link>
+                </Typography>
+                <Typography color="textSecondary">
+                  {date}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
 
-            <Link to={`/trips/${this.id}/stops/${id}`}>{location}</Link>
-            <br/>
-            <p>{date}</p>
-
-          </li>
         )
       })
 
     }
 
+    const container = {
+      padding: 24
+    }
+
+    const root = {
+      flexGrow: 1,
+    }
+    const grow = {
+      flexGrow: 1,
+    }
+    const menuButton = {
+      marginLeft: -12,
+      marginRight: 20,
+    }
+
+
     return(
+
+
       <React.Fragment>
+        <div>
+          <AppBar position="static" color="default">
+            <Toolbar>
+              <Typography style={grow} variant="h6" color="inherit">
+                {trip && trip.name}
+              </Typography>
+              <Link style={menuButton} exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
+              {stopList && <Link style={menuButton} exact to={ `/trips/${this.id}/map` }>map trip!</Link>}
+            </Toolbar>
+          </AppBar>
+        </div>
+        <div style={container}>
+          <Grid container spacing={24}>
+
+            <Grid item xs={12} sm={6} md={4} lg={3}>
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="new stop">
+                      <NotListedLocationIcon/>
+                    </Avatar>
+                  }
+                  title="Where to next?"
+                />
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
+                  </Typography>
+                  <Typography color="textSecondary">
+                    build out your trip!
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+
+          </Grid>
+        </div>
 
 
 
-        <h1>{trip && trip.name}</h1>
-        <Link exact to={ `/trips/${this.id}/rename` }>rename trip</Link>
-        <br/>
-        <Link exact to={ `/trips/${this.id}/map` }>map trip!</Link>
-        <br/>
 
-        <ul>
 
-          { stopList }
-
-        </ul>
-
-        <Link exact to={ `/trips/${this.id}/add-stop` }>add stop</Link>
 
 
 
