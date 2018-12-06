@@ -16,6 +16,15 @@ import { handleErrors, getText } from '../api'
 import { googleMapsApiKey } from '../../.env.js'
 const googleTranslate = require('google-translate')(googleMapsApiKey)
 
+// material UI imports
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+
 class VisionTranslate extends Component {
   constructor (props) {
     super(props)
@@ -109,34 +118,43 @@ class VisionTranslate extends Component {
       // height: '300px'
     }
 
-    const thumbnailSize = {
-      // height: '200px'
+    const paddingBottom = {
+      'padding-bottom': '20px'
+    }
+
+    const marginBottom = {
+      'margin-bottom': '20px'
     }
 
     return(
       <React.Fragment>
-        <div className="row">
-          <div className="col-12">
+        <Typography color="textSecondary">
+          or detect text from an image
+        </Typography>
 
-            <FileBase64
-              multiple={ false }
-              onDone={ this.getFile.bind(this) } />
-            <button type="submit" onClick={this.onGetText}>get text</button>
-            <div style={thumbnailSize}>
-              { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
-            </div>
-            <div style={content}>
-              {description && <span> <code>detected text:</code> </span> }
-              {DOMPurify.sanitize(description)}
-            </div>
-            <br/>
-            <div style={content}>
-              {description && <span> <code>translated text:</code> </span> }
-              {DOMPurify.sanitize(descriptionTranslated)}
-            </div>
+        <Typography variant="h5" component="h2">
+
+          <FileBase64
+            multiple={ false }
+            onDone={ this.getFile.bind(this) }
+            style={paddingBottom}
+          />
+          <div style={paddingBottom}>
+            { base64 && <img src={base64} className="img-thumbnail" alt="image preview" /> }
           </div>
-        </div>
-
+          { base64 && <Button style={marginBottom} variant="contained" color="primary" type="submit" primary={true} onClick={this.onGetText}>
+            detect text and translate
+          </Button> }
+          <div style={content}>
+            {description && <span> <code>detected text:</code> </span> }
+            {DOMPurify.sanitize(description)}
+          </div>
+          <br/>
+          <div style={content}>
+            {description && <span> <code>translated text:</code> </span> }
+            {DOMPurify.sanitize(descriptionTranslated)}
+          </div>
+        </Typography>
 
       </React.Fragment>
     )

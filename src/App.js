@@ -18,6 +18,8 @@ import NewStop from './stops/components/NewStop'
 import MyMap from './maps/components/MyMap'
 import Stop from './stops/components/Stop'
 
+import PrimarySearchAppBar from './header/PrimarySearchAppBar'
+
 import 'typeface-roboto'
 
 class App extends Component {
@@ -58,7 +60,7 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <Header user={user} />
+        <PrimarySearchAppBar user={user} />
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
         <main>

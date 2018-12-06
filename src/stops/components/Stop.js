@@ -12,6 +12,24 @@ import VisionTranslate from './VisionTranslate'
 
 const loadGoogleMapsApi = require('load-google-maps-api')
 
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import TranslateIcon from '@material-ui/icons/Translate'
+import WbSunnyIcon from '@material-ui/icons/WbSunny'
+
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+
+
+
 class Stop extends Component {
   constructor (props) {
     super(props)
@@ -265,13 +283,6 @@ class Stop extends Component {
 
     responsive: true,
 
-    scales: {
-      yAxes: [{
-        display: true,
-        labelString: 'temp'
-      }]
-    },
-
   	///Boolean - Whether grid lines are shown across the chart
   	scaleShowGridLines : true,
 
@@ -416,7 +427,13 @@ class Stop extends Component {
       height: '500px',
       'margin-bottom': '20px'
     }
+
     const container = {
+      padding: 24
+    }
+
+    const paddingBottom = {
+      'padding-bottom': '20px'
     }
 
     const { translation, stop, stopNumber, chartData } = this.state
@@ -424,44 +441,89 @@ class Stop extends Component {
     return(
       <React.Fragment>
 
-        <h1>Stop No. {stopNumber}: {stop.location}</h1>
-        <h3>{stop.date}</h3>
-        <div className="map" style={map}></div>
-        <div className="container" style={container}>
-          <div className="row">
-            <div className="col-12 col-lg-6" style={weatherDiv}>
-              <div className="row">highs/lows this week</div>
-              <div className="row">
-
-                <LineChart
-                  data={chartData}
-                  options={this.chartOptions}
-                  width="500"
-                  height="300"
-                />
-              </div>
-
-            </div>
-            <div className="col-12 col-lg-6" style={translationDiv}>
-              translation
-              <form className='translation-form' onSubmit={this.onTranslate}>
-                <input
-                  required
-                  name="textToTranslate"
-                  value={translation.textToTranslate}
-                  type="text"
-                  placeholder="ex, 'Le vent se léve...'"
-                  onChange={this.handleChange}
-                />
-                <button type="submit">translate text</button>
-              </form>
-              <div className="translation-response" >{translation.translatedText}</div>
-              <VisionTranslate
-                flash={this.newFlash}
-              />
-            </div>
-          </div>
+        <div>
+          <AppBar position="static" color="default">
+            <Toolbar>
+              <Typography variant="h6" color="inherit">
+                Stop No. {stopNumber}: {stop.location} ({stop.date})
+              </Typography>
+            </Toolbar>
+          </AppBar>
         </div>
+
+        <div className="map" style={map}></div>
+
+        <div style={container}>
+          <Grid container spacing={24}>
+
+            <Grid item sm={12} md={6} >
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="forecast">
+                      <WbSunnyIcon/>
+                    </Avatar>
+                  }
+                  title="7-day forcast (high/low temp in F)"
+                />
+                <CardContent>
+                  <LineChart
+                    data={chartData}
+                    options={this.chartOptions}
+                    width="500"
+                    height="300"
+                  />
+
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item sm={12} md={6} >
+              <Card>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="translate">
+                      <TranslateIcon/>
+                    </Avatar>
+                  }
+                  title="translation"
+                />
+                <CardContent>
+                  <Typography color="textSecondary">
+                    translate a phrase to English
+                  </Typography>
+                  <Typography style={paddingBottom} variant="h5" component="h2">
+                    <form style={paddingBottom} className='translation-form' onSubmit={this.onTranslate}>
+                      <input
+                        required
+                        name="textToTranslate"
+                        value={translation.textToTranslate}
+                        type="text"
+                        placeholder="ex, 'Le vent se léve...'"
+                        onChange={this.handleChange}
+                      />
+                      <Button variant="contained" color="primary" type="submit" primary={true} >
+                        translate text
+                      </Button>
+                    </form>
+
+
+                    <div className="translation-response" >
+                      {translation.translatedText && <span> <code>translated text:</code> </span> }
+                      {translation.translatedText}
+                    </div>
+                  </Typography>
+
+                  <VisionTranslate
+                    flash={this.newFlash}
+                  />
+
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
+
+
 
       </React.Fragment>
     )

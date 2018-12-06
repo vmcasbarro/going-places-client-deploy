@@ -108,6 +108,7 @@ class Trips extends Component {
               <Typography variant="h6" color="inherit">
                 Trips
               </Typography>
+
             </Toolbar>
           </AppBar>
         </div>
