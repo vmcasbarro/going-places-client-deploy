@@ -23,7 +23,6 @@ class MyMap extends Component {
     const { stops } = this.props
 
     const arrayOfLocations = stops.map(stop => stop.location)
-    // console.log(arrayOfLocations)
 
     // break out first stop as a variable to reference
     const firstStop = stops[0]
@@ -175,8 +174,6 @@ class MyMap extends Component {
                 map: map,
                 title: 'this is a stop on the trip'
               })
-              console.log('marker is:', marker)
-              console.log(marker.position)
               //extend the bounds to include each marker's position
               bounds.extend(marker.position)
             } else {

@@ -46,7 +46,6 @@ class StopMap extends Component {
     // destructure stop passed in as a prop from Stop
     const { stop } = this.state
     // this returns an empty object, not sure why...
-    console.log('what stop?', stop)
 
     // initialize map variable which will be the instance of google map
     let map
@@ -183,7 +182,6 @@ class StopMap extends Component {
             map.setCenter(results[0].geometry.location)
             lat = results[0].geometry.location.lat()
             long = results[0].geometry.location.lng()
-            console.log(lat, long)
             const marker = new google.maps.Marker({
               position: results[0].geometry.location,
               map: map,

@@ -72,7 +72,6 @@ class RenameTrip extends Component {
 
   render () {
     const { trip, newName } = this.state
-    console.log(this.id)
 
     return(
       <React.Fragment>

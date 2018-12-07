@@ -50,11 +50,9 @@ class VisionTranslate extends Component {
   removeBase64Prefix(){
     // destructure the state to get the base64 string (with prefix)
     const { base64 } = this.state.newFile
-    console.log(base64)
     // find the index of ',', which is the end of the prefix
     const startingPoint = (base64.indexOf(',')) + 1
     const trimmedBase64 = base64.slice(startingPoint)
-    console.log(trimmedBase64)
     const trimmedNewFile = { ...this.state.newFile, base64: trimmedBase64 }
     this.setState({ brandNewFile: trimmedNewFile})
   }
@@ -62,9 +60,7 @@ class VisionTranslate extends Component {
   onGetText(event) {
     const { flash } = this.props
     const { base64 } = this.state.brandNewFile
-    console.log(base64, googleMapsApiKey)
     event.preventDefault()
-    console.log('clicked!')
     getText(base64, googleMapsApiKey)
       .then((response) => response.json())
       .then((jsonResponse) => {

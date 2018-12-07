@@ -68,7 +68,6 @@ class Trip extends Component {
   }
 
   onDeleteTrip(event) {
-    console.log(event)
     const { flash, history, user } = this.props
 
     deleteTrip(this.id, user)
@@ -82,7 +81,6 @@ class Trip extends Component {
 
 
 
-    console.log(trip)
     let stopList = null
     if (stops.length) {
 

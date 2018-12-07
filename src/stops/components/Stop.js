@@ -241,7 +241,6 @@ class Stop extends Component {
             })
           })
           .then(() => this.onGetForecast())
-          // .then((results) => {console.log(results)})
           .catch(console.error)
 
 
