@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 
-import { handleErrors, createTrip, getTrips, deleteTrip } from '../api'
+import { handleErrors, createTrip, getTrips } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -27,6 +27,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 
 
+
 class Trips extends Component {
   constructor (props) {
     super(props)
@@ -36,7 +37,7 @@ class Trips extends Component {
     }
 
     // This binding is necessary to make `this` work in the callback
-    this.onDeleteTrip = this.onDeleteTrip.bind(this)
+    // this.onDeleteTrip = this.onDeleteTrip.bind(this)
 
   }
 
@@ -53,15 +54,6 @@ class Trips extends Component {
 
   componentDidMount() {
     this.onGetTrips()
-  }
-
-  onDeleteTrip(event) {
-    console.log(event)
-    const { user } = this.props
-    const id = event.target.dataset['id']
-
-    deleteTrip(id, user)
-      .then(() => {this.onGetTrips()})
   }
 
   render () {
@@ -88,11 +80,7 @@ class Trips extends Component {
               <Typography variant="h5" component="h2">
                 <Link to={`/trips/${id}`}>{name} </Link>
               </Typography>
-              <Typography color="textSecondary">
-                <button className="btn btn-sm btn-outline-warning" data-id={id} onClick={this.onDeleteTrip}>
-                  delete trip
-                </button>
-              </Typography>
+
             </CardContent>
           </Card>
         </Grid>

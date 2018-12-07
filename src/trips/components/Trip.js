@@ -23,6 +23,9 @@ import Avatar from '@material-ui/core/Avatar'
 import PlaceIcon from '@material-ui/icons/Place'
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
 
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 
@@ -35,7 +38,7 @@ class Trip extends Component {
     this.state = {}
 
     // This binding is necessary to make `this` work in the callback
-    // this.onDeleteTrip = this.onDeleteTrip.bind(this)
+    this.onDeleteTrip = this.onDeleteTrip.bind(this)
     this.onGetTrip = this.onGetTrip.bind(this)
 
     // get trip id which is used by most of the methods in this class
@@ -64,13 +67,15 @@ class Trip extends Component {
       .catch(() => flash(messages.getStopsFailure, 'flash-error'))
   }
 
-  // onDeleteTrip(event) {
-  //   const { user } = this.props
-  //   const id = event.target.dataset['id']
-  //
-  //   deleteTrip(id, user)
-  //     .then(() => {this.onGetTrips()})
-  // }
+  onDeleteTrip(event) {
+    console.log(event)
+    const { flash, history, user } = this.props
+
+    deleteTrip(this.id, user)
+      .then(handleErrors)
+      .then(() => history.push('/trips'))
+      .catch(() => flash(messages.getTripsFailure, 'flash-error'))
+  }
 
   render () {
     const { flash, user, trip, stops } = this.props
@@ -142,8 +147,12 @@ class Trip extends Component {
                 <Button color="inherit">Rename Trip</Button>
               </Link>
 
+              <IconButton style={menuButton} aria-haspopup="true" onClick={this.onDeleteTrip} color="inherit">
+                <DeleteIcon />
+              </IconButton>
+
               { stopList && <Link style={menuButton} exact to={ `/trips/${this.id}/map` }>
-                <Button variant="contained" color="primary">Map Trip!</Button>
+                <Button variant="contained" color="secondary">Map Trip!</Button>
               </Link> }
 
             </Toolbar>

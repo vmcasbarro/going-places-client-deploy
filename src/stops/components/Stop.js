@@ -283,6 +283,30 @@ class Stop extends Component {
 
     responsive: true,
 
+    scales: {
+      xAxes: [{
+        display: true,
+        gridLines: {
+          display: false
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Day'
+        }
+      }],
+      yAxes: [{
+        display: true,
+        gridLines: {
+          display: false
+        },
+        scaleLabel: {
+          display: true,
+          labelString: '°C'
+        }
+      }]
+    },
+
+
   	///Boolean - Whether grid lines are shown across the chart
   	scaleShowGridLines : true,
 
@@ -464,7 +488,7 @@ class Stop extends Component {
                       <WbSunnyIcon/>
                     </Avatar>
                   }
-                  title="7-day forcast (high/low temp in F)"
+                  title="7-day forcast (high/low temps in Farenheit)"
                 />
                 <CardContent>
                   <LineChart
@@ -501,7 +525,8 @@ class Stop extends Component {
                         placeholder="ex, 'Le vent se léve...'"
                         onChange={this.handleChange}
                       />
-                      <Button variant="contained" color="primary" type="submit" primary={true} >
+                      <br/>
+                      <Button size="medium" variant="contained" color="primary" type="submit" primary={true} >
                         translate text
                       </Button>
                     </form>

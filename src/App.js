@@ -17,8 +17,13 @@ import RenameTrip from './trips/components/RenameTrip'
 import NewStop from './stops/components/NewStop'
 import MyMap from './maps/components/MyMap'
 import Stop from './stops/components/Stop'
+import Home from './auth/components/Home'
+import Vision from './auth/components/Vision'
 
 import PrimarySearchAppBar from './header/PrimarySearchAppBar'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import lightGreen from '@material-ui/core/colors/lightGreen'
+import blue from '@material-ui/core/colors/amber'
 
 import 'typeface-roboto'
 
@@ -55,84 +60,106 @@ class App extends Component {
     }), 2000)
   }
 
+
   render () {
     const { flashMessage, flashType, user, trips, trip, stops } = this.state
 
+    const theme = createMuiTheme({
+      palette: {
+        primary: lightGreen,
+        secondary: blue,
+      },
+    })
+
     return (
       <React.Fragment>
-        <PrimarySearchAppBar user={user} />
-        {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
+        <MuiThemeProvider theme={theme}>
 
-        <main>
+          <PrimarySearchAppBar user={user}/>
 
-          <Route path='/sign-up' render={() => (
-            <SignUp flash={this.flash} setUser={this.setUser} />
-          )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn flash={this.flash} setUser={this.setUser} />
-          )} />
-          <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword flash={this.flash} user={user} />
-          )} />
+          {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
-          {
-            // TRIP ROUTES
-          }
-          <Switch>
-            <AuthenticatedRoute user={user} exact path='/trips/new-trip' render={() => (
-              <NewTrip flash={this.flash} user={user} />
+          <main>
+
+            <Route exact path='/' render={() => (
+              <Home />
             )} />
-            <AuthenticatedRoute user={user} exact path='/trips' render={() => (
-              <Trips flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
+
+            <Route exact path='/vision' render={() => (
+              <Vision
+                flash={this.newFlash}
+              />
             )} />
-            <AuthenticatedRoute user={user} exact path='/trips/:id' render={() => (
-              <Trip
+
+            <Route path='/sign-up' render={() => (
+              <SignUp flash={this.flash} setUser={this.setUser} />
+            )} />
+            <Route path='/sign-in' render={() => (
+              <SignIn flash={this.flash} setUser={this.setUser} />
+            )} />
+            <AuthenticatedRoute user={user} path='/sign-out' render={() => (
+              <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />
+            )} />
+            <AuthenticatedRoute user={user} path='/change-password' render={() => (
+              <ChangePassword flash={this.flash} user={user} />
+            )} />
+
+            {
+              // TRIP ROUTES
+            }
+            <Switch>
+              <AuthenticatedRoute user={user} exact path='/trips/new-trip' render={() => (
+                <NewTrip flash={this.flash} user={user} />
+              )} />
+              <AuthenticatedRoute user={user} exact path='/trips' render={() => (
+                <Trips flash={this.flash} user={user} setTrips={this.setTrips} trips={trips} />
+              )} />
+              <AuthenticatedRoute user={user} exact path='/trips/:id' render={() => (
+                <Trip
+                  flash={this.flash}
+                  user={user}
+                  setTrip={this.setTrip}
+                  setStops={this.setStops}
+                  trip={trip}
+                  stops={stops}
+                />
+              )} />
+              <AuthenticatedRoute user={user} exact path='/trips/:id/rename' render={() => (
+                <RenameTrip flash={this.flash} user={user} />
+              )} />
+
+              <AuthenticatedRoute user={user} exact path='/trips/:id/map' render={() => (
+                <MyMap
+                  flash={this.flash}
+                  user={user}
+                  trip={trip}
+                  stops={stops}
+                />
+              )} />
+
+            </Switch>
+
+            {
+              // STOP ROUTES
+            }
+
+            <AuthenticatedRoute user={user} exact path='/trips/:id/add-stop' render={() => (
+              <NewStop flash={this.flash} user={user} />
+            )} />
+
+            <AuthenticatedRoute user={user} exact path='/trips/:id/stops/:id' render={() => (
+              <Stop
                 flash={this.flash}
                 user={user}
-                setTrip={this.setTrip}
-                setStops={this.setStops}
                 trip={trip}
                 stops={stops}
               />
             )} />
-            <AuthenticatedRoute user={user} exact path='/trips/:id/rename' render={() => (
-              <RenameTrip flash={this.flash} user={user} />
-            )} />
-
-            <AuthenticatedRoute user={user} exact path='/trips/:id/map' render={() => (
-              <MyMap
-                flash={this.flash}
-                user={user}
-                trip={trip}
-                stops={stops}
-              />
-            )} />
-
-          </Switch>
-
-          {
-            // STOP ROUTES
-          }
-
-          <AuthenticatedRoute user={user} exact path='/trips/:id/add-stop' render={() => (
-            <NewStop flash={this.flash} user={user} />
-          )} />
-
-          <AuthenticatedRoute user={user} exact path='/trips/:id/stops/:id' render={() => (
-            <Stop
-              flash={this.flash}
-              user={user}
-              trip={trip}
-              stops={stops}
-            />
-          )} />
 
 
 
-        </main>
+          </main>
+        </MuiThemeProvider>
       </React.Fragment>
     )
   }
