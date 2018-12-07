@@ -22,8 +22,7 @@ import Vision from './auth/components/Vision'
 
 import PrimarySearchAppBar from './header/PrimarySearchAppBar'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import lightGreen from '@material-ui/core/colors/lightGreen'
-import blue from '@material-ui/core/colors/amber'
+import blue from '@material-ui/core/colors/blue'
 
 import 'typeface-roboto'
 
@@ -66,7 +65,7 @@ class App extends Component {
 
     const theme = createMuiTheme({
       palette: {
-        primary: lightGreen,
+        primary: blue,
         secondary: blue,
       },
     })
