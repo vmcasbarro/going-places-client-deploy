@@ -18,6 +18,13 @@ Whether going on a month-long backpacking trip through Asia, or just getting hom
 
 Travelers should also be able to leverage the power of portable technology to while abroad, and I wanted to design app functionality that is useful to the traveler during the journey. To that end, I built off of several third-party APIs to compile real-time weather data for each stop, a translation feature, and an image to text (optical character recognition) feature that translates text from an image file into English and displays both the native text and translated text.
 
+![trip itinerary](https://i.imgur.com/D1J7Xgt.png)
+
+![mapped trip](https://i.imgur.com/xD95thG.png)
+
+![translation and weather](https://i.imgur.com/769Gmxe.png)
+
+
 ## Technologies Used
 - Front End
   - React JS
@@ -57,6 +64,11 @@ Below are several shots capturing my planning process, including brainstorming f
 
 ![project brainstorming](https://i.imgur.com/VlLKlhz.jpg")
 
+## Future Directions
+1. Incorporate more advanced weather data using Dark Sky
+2. Add a range of dates to each stop
+3. Add currency info for each stop
+4. Refactor weather chart with ChartJS-2
 
 ## Setting Up and Deploying the Client Side
 1. Start with React Auth template from GA (https://git.generalassemb.ly/ga-wdi-boston/react-auth-template)
