@@ -210,7 +210,7 @@ class PrimarySearchAppBar extends React.Component {
           <Toolbar>
             <img src={require('../compass.svg')} style={{width:'58px', marginLeft:'1vw', paddingRight:'14px'}} />
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Le vent se léve...
+              The Wind Rises
             </Typography>
 
             <div className={classes.grow} />
